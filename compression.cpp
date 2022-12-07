@@ -18,6 +18,11 @@ public:
 	}
 };
 
+bool compare(Node* n1, Node* n2)
+{
+	return n1->freq < n2->freq;
+}
+
 vector<pair<int, char>> get_chars_frq(string s)
 {
 	map<char, int>map;
@@ -46,34 +51,57 @@ Node* make_huffman_tree(vector<pair<int, char>>& v)
 		parentNode->left = leftNode;
 		parentNode->right = rightNode;
 		vect.push_back(parentNode);
+		sort(vect.rbegin(), vect.rend(), compare);
 		if (vect.size() == 1) break;
 	}
 	return vect[0];
 }
 
-void char_to_binary(Node* root, map<char, string>&m, string s)
+void char_to_binary(Node* root, map<char, string>& codes, string s)
 {
 	if (!root) return;
 	if (root->c != '~')
 	{
-		m[root->c] = s;
+		codes[root->c] = s;
 		return;
 	}
-	char_to_binary(root->left, m, s + "0");
-	char_to_binary(root->right, m, s + "1");
+	char_to_binary(root->left, codes, s + "0");
+	char_to_binary(root->right, codes, s + "1");
 }
 
-void print_codes(map<char, string>&m)
+void print_codes(map<char, string>& codes)
 {
-	for (auto i : m)
+	for (auto i : codes)
 		cout << i.first << " -> " << i.second << endl;
 }
 
 
-void print_encoded_str(string s, map<char, string>&m)
+string encode_str(string s, map<char, string>& codes)
 {
+	string encodedStr = "";
 	for (size_t i = 0; i < s.size(); i++)
-		cout << m[s[i]];
+		encodedStr += codes[s[i]];
+	return encodedStr;
+}
+
+string decode_str(map<char, string>codes, string encodedStr)
+{
+	map<string, char>reverseCodes;
+	for (auto i : codes)
+		reverseCodes[i.second] = i.first;
+	//Now the key -> string, the value -> char
+	string buffer = "";
+	string decodedStr = "";
+	for (size_t i = 0; i < encodedStr.size(); i++)
+	{
+		buffer += encodedStr[i];
+		if (reverseCodes.find(buffer) != reverseCodes.end())
+		{
+			decodedStr += reverseCodes[buffer];
+			buffer = "";
+		}
+	}
+	return decodedStr;
 }
 
 void print_frq(vector<pair<int, char>> v)
@@ -88,8 +116,12 @@ int main()
 	vector<pair<int, char>>v = get_chars_frq(str);
 	print_frq(v);
 	Node* root = make_huffman_tree(v);
-	map<char, string>m;
-	char_to_binary(root, m, "");
-	print_codes(m);
-	print_encoded_str(str, m);
+	map<char, string>codes;
+	char_to_binary(root, codes, "");
+	print_codes(codes);
+	string encodedStr = encode_str(str, codes);
+	string decodedStr = decode_str(codes, encodedStr);
+	cout << encodedStr << endl;
+	cout << decodedStr << endl;
+	cout << endl;
 }
