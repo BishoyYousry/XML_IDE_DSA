@@ -84,6 +84,7 @@ string encode_str(string s, map<char, string>& codes)
 	return encodedStr;
 }
 
+
 string decode_str(map<char, string>codes, string encodedStr)
 {
 	map<string, char>reverseCodes;
@@ -104,24 +105,56 @@ string decode_str(map<char, string>codes, string encodedStr)
 	return decodedStr;
 }
 
+string encoded_to_symbol(string encodedStr)
+{
+	string strBuffer = "";
+	string symboledStr;
+	for (size_t i = 0; i < encodedStr.size(); i++)
+	{
+		strBuffer += encodedStr[i];
+		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == strBuffer.size() - 1))
+		{
+			symboledStr += (char)stoi(strBuffer);
+			strBuffer = "";
+		}
+	}
+	return symboledStr;
+}
+
 void print_frq(vector<pair<int, char>> v)
 {
 	for (auto i : v)
 		cout << i.second << " -> " << i.first << endl;
 }
 
+string readFile(string path = "C:/Users/future/Desktop/main/main/XMLFile.xml")
+{
+	string line;
+	string wholeFile = "";
+	ifstream inputFile(path);
+	while (getline(inputFile, line))
+		wholeFile += line;
+	return wholeFile;
+}
+
+void writeFile(string s)
+{
+	fstream outputFile;
+	outputFile.open("Sample.txt", ios::out);
+	outputFile << s;
+}
+
 int main()
 {
-	string str; cin >> str;
-	vector<pair<int, char>>v = get_chars_frq(str);
+	string allLines = readFile();
+	vector<pair<int, char>>v = get_chars_frq(allLines);
 	print_frq(v);
 	Node* root = make_huffman_tree(v);
 	map<char, string>codes;
 	char_to_binary(root, codes, "");
 	print_codes(codes);
-	string encodedStr = encode_str(str, codes);
-	string decodedStr = decode_str(codes, encodedStr);
-	cout << encodedStr << endl;
-	cout << decodedStr << endl;
-	cout << endl;
+	string symboledStr = encoded_to_symbol(encode_str(allLines, codes));
+	//string decodedStr = decode_str(codes, encodedStr);
+	writeFile(symboledStr);
+	
 }
