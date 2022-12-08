@@ -52,11 +52,10 @@ void writeFile(vector<int>&encoded)
         outputFile << to_string(encoded[i]) << " ";
 }
 
-/*
-int main()
-{
-	string text = readFile();
-    vector<int> encoded = encoding(text);
-    writeFile(encoded);
-}
-*/
+
+// int main()
+// {
+// 	string text = readFile();
+//     vector<int> encoded = encoding(text);
+//     writeFile(encoded);
+// }
