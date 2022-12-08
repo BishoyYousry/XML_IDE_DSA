@@ -1,160 +1,62 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
+#include <unordered_map>
+
 using namespace std;
+
+vector<int> encoding(string s1)
+{
+    unordered_map<string, int> table;
+    for (int i = 0; i <= 255; i++) {
+        string ch = "";
+        ch += char(i);
+        table[ch] = i;
+    }
  
-
-class Node
-{
-public:
-	int freq;
-	char c;
-	Node* left;
-	Node* right;
-	Node(int freq, char c)
-	{
-		this->freq = freq;
-		this->c = c;
-		this->left = nullptr;
-		this->right = nullptr;
-	}
-};
-
-bool compare(Node* n1, Node* n2)
-{
-	return n1->freq < n2->freq;
+    string p = "", c = "";
+    p += s1[0];
+    int code = 256;
+    vector<int> output_code;
+    for (int i = 0; i < s1.length(); i++) {
+        if (i != s1.length() - 1)
+            c += s1[i + 1];
+        if (table.find(p + c) != table.end()) {
+            p = p + c;
+        }
+        else {
+            output_code.push_back(table[p]);
+            table[p + c] = code;
+            code++;
+            p = c;
+        }
+        c = "";
+    }
+    output_code.push_back(table[p]);
+    return output_code;
 }
 
-vector<pair<int, char>> get_chars_frq(string s)
-{
-	map<char, int>map;
-	for (size_t i = 0; i < s.size(); i++)
-		map[s[i]]++;
-	vector<pair<int, char>>v;
-	for (auto i : map)
-		v.push_back({ i.second, i.first });
-	sort(v.rbegin(), v.rend());
-	return v;
-}
-
-
-Node* make_huffman_tree(vector<pair<int, char>>& v)
-{
-	vector<Node*>vect;
-	for (size_t i = 0; i < v.size(); i++)
-		vect.push_back(new Node(v[i].first, v[i].second));
-	while (!vect.empty())
-	{
-		Node* leftNode = vect.back();
-		vect.pop_back();
-		Node* rightNode = vect.back();
-		vect.pop_back();
-		Node* parentNode = new Node(leftNode->freq + rightNode->freq, '~');
-		parentNode->left = leftNode;
-		parentNode->right = rightNode;
-		vect.push_back(parentNode);
-		sort(vect.rbegin(), vect.rend(), compare);
-		if (vect.size() == 1) break;
-	}
-	return vect[0];
-}
-
-void char_to_binary(Node* root, map<char, string>& codes, string s)
-{
-	if (!root) return;
-	if (root->c != '~')
-	{
-		codes[root->c] = s;
-		return;
-	}
-	char_to_binary(root->left, codes, s + "0");
-	char_to_binary(root->right, codes, s + "1");
-}
-
-void print_codes(map<char, string>& codes)
-{
-	for (auto i : codes)
-		cout << i.first << " -> " << i.second << endl;
-}
-
-
-string encode_str(string s, map<char, string>& codes)
-{
-	string encodedStr = "";
-	for (size_t i = 0; i < s.size(); i++)
-		encodedStr += codes[s[i]];
-	return encodedStr;
-}
-
-
-string decode_str(map<char, string>codes, string encodedStr)
-{
-	map<string, char>reverseCodes;
-	for (auto i : codes)
-		reverseCodes[i.second] = i.first;
-	//Now the key -> string, the value -> char
-	string buffer = "";
-	string decodedStr = "";
-	for (size_t i = 0; i < encodedStr.size(); i++)
-	{
-		buffer += encodedStr[i];
-		if (reverseCodes.find(buffer) != reverseCodes.end())
-		{
-			decodedStr += reverseCodes[buffer];
-			buffer = "";
-		}
-	}
-	return decodedStr;
-}
-
-string encoded_to_symbol(string encodedStr)
-{
-	string strBuffer = "";
-	string symboledStr;
-	for (size_t i = 0; i < encodedStr.size(); i++)
-	{
-		strBuffer += encodedStr[i];
-		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == strBuffer.size() - 1))
-		{
-			symboledStr += (char)stoi(strBuffer);
-			strBuffer = "";
-		}
-	}
-	return symboledStr;
-}
-
-void print_frq(vector<pair<int, char>> v)
-{
-	for (auto i : v)
-		cout << i.second << " -> " << i.first << endl;
-}
-
-string readFile(string path = "C:/Users/future/Desktop/main/main/XMLFile.xml")
+string readFile(string path = "D:/ASU/Senior1/DSA/Project/Data_Structure_Project/XMLFile.xml")
 {
 	string line;
 	string wholeFile = "";
 	ifstream inputFile(path);
 	while (getline(inputFile, line))
-		wholeFile += line;
+		wholeFile = wholeFile + line + "\n";
 	return wholeFile;
 }
 
-void writeFile(string s)
+void writeFile(vector<int>&encoded)
 {
 	fstream outputFile;
 	outputFile.open("Sample.txt", ios::out);
-	outputFile << s;
+    for (int i = 0; i < encoded.size(); i++) 
+        outputFile << to_string(encoded[i]) << " ";
 }
 
+/*
 int main()
 {
-	string allLines = readFile();
-	vector<pair<int, char>>v = get_chars_frq(allLines);
-	print_frq(v);
-	Node* root = make_huffman_tree(v);
-	map<char, string>codes;
-	char_to_binary(root, codes, "");
-	print_codes(codes);
-	string symboledStr = encoded_to_symbol(encode_str(allLines, codes));
-	//string decodedStr = decode_str(codes, encodedStr);
-	writeFile(symboledStr);
-	
+	string text = readFile();
+    vector<int> encoded = encoding(text);
+    writeFile(encoded);
 }
+*/
