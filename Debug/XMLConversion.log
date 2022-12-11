@@ -1,0 +1,4 @@
+﻿  XMLConversion.cpp
+C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(38,14): error C2143: syntax error: missing ';' before '<'
+C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(38,14): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(38,29): error C2238: unexpected token(s) preceding ';'
