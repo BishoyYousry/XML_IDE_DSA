@@ -19,28 +19,29 @@ using namespace std;
 //--------------------- array to tree ------------------------------------------------------------
 
 
-    Node* arrToTree(vector<Node*> arr) {
+    Node* arrToTree(vector<Node*> &arr) {
 
-        stack<Node*> stack;
+        stack<Node*> stack ;
 
-        for (auto current : arr) {
+        for (Node* current : arr) {
 
-            if (current->type == NodeType::CLOSINGTAG) {
-                Node* temp = new Node(NodeType::ELEMENT, current->data);
-                Node* top = stack.pop();
-                while (top->type != NodeType::OPENINGTAG) {
-                    temp->children.push_back(top);
-                    top = stack.pop();
+            if (current-> type == 1) {
+                Node* temp = new Node(NodeType::ELEMENT, current-> data);
+                Node* top = stack.top();
+                while (top-> type != NodeType::OPENINGTAG) {
+                    temp-> children.push_back(top);
+                    top = stack.top();
+                    stack.pop();
                 }
 
                 top = ((stack.empty()) ? nullptr : stack.top());
                 if (!stack.empty() && (top->data)._Equal(current->data)) {
                     top->type = NodeType::REPEATEDTAG;
                     if (temp->children.size() == 1)
-                        top->children.push_back(temp->children[0])
+                        top->children.push_back(temp->children[0]);
                     else {
                         temp->data = "";
-                        if (top->notFirst) {
+                        if (top-> notFirst) {
                             top->children.push_back(temp);
                         }
                         else {
@@ -69,7 +70,7 @@ using namespace std;
 
 
         }
-        return stack.pop();
+        return stack.top();
     }
 
     //--------------------------- xml to array -------------------------------------------------
@@ -124,23 +125,23 @@ using namespace std;
 
     enum NodeType { OPENINGTAG, CLOSINGTAG, DATA, ELEMENT, REPEATEDTAG, DATAELEMENT };
 
-    class Node {
+    static class Node {
 
-    private:
+    public:
 
         NodeType type;
         string data;
         vector <Node*> children;
-        bool notfirst = false;
+        bool notFirst ;
 
     public:
-
 
 
         Node(NodeType t, std::string d) {
             this->type = t;
             this->data = d;
             this->children = vector<Node*>();
+            
         }
 
     };
