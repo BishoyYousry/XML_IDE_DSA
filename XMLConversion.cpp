@@ -9,82 +9,144 @@
 #include <cctype>
 #include <vector>
 #include <list>
+#include <stack>
 
 
 using namespace std;
 
 
-int main()
-{
-    string x;
-    string y;
 
-    ifstream f("XML.txt");
-    ofstream fileCreated("Testf.txt");
+//--------------------- array to tree ------------------------------------------------------------
 
 
-    vector<Node*> allNodes = vector<Node*>();
+    Node* arrToTree(vector<Node*> arr) {
 
-    while (getline(f, x)) {
-        stringstream ss;
-        for (int i = 0; i < x.length(); i++) {
+        stack<Node*> stack;
 
-            if (x.at(i) == '<') {
-                i++;
-                bool ct = false;
-                if (x[i] == '/') {
-                    ct = true;
-                    i++;
-                }
-                while (x[i] != '>') {
-                    ss << x[i];
-                    i++;
+        for (auto current : arr) {
+
+            if (current->type == NodeType::CLOSINGTAG) {
+                Node* temp = new Node(NodeType::ELEMENT, current->data);
+                Node* top = stack.pop();
+                while (top->type != NodeType::OPENINGTAG) {
+                    temp->children.push_back(top);
+                    top = stack.pop();
                 }
 
-                Node* n = new Node(((ct) ? NodeType::CLOSINGTAG : NodeType::OPENINGTAG), ss.str());
+                top = ((stack.empty()) ? nullptr : stack.top());
+                if (!stack.empty() && (top->data)._Equal(current->data)) {
+                    top->type = NodeType::REPEATEDTAG;
+                    if (temp->children.size() == 1)
+                        top->children.push_back(temp->children[0])
+                    else {
+                        temp->data = "";
+                        if (top->notFirst) {
+                            top->children.push_back(temp);
+                        }
+                        else {
+                            Node* e = new Node(NodeType::ELEMENT, "");
+                            e->children = top->children;
+                            top->children = vector<Node*>();
+                            top->children.push_back(e);
+                            top->children.push_back(temp);
+                            top->notFirst = true;
+                        }
+                    }
+                }
+                else if (temp->children.size() == 1 && temp->children[0]->type == NodeType::DATA) {
 
-                allNodes.push_back(n);
+                    temp->type = NodeType::DATAELEMENT;
+                    stack.push(temp);
+                }
+                else {
+                    stack.push(temp);
+                }
+            }
+            else
+            {
+                stack.push(current);
             }
 
-            else {
 
-                while (x[i] != '<')
-                    ss << x[i++];
+        }
+        return stack.pop();
+    }
 
-                Node* n = new Node(NodeType::DATA, ss.str());
-                allNodes.push_back(n);
-                i--;
+    //--------------------------- xml to array -------------------------------------------------
+
+    vector<Node*> XML_Arr(string xmlFile_name) {
+
+        string x;
+        string y;
+
+        ifstream f(xmlFile_name);
+        ofstream fileCreated("Testf.txt");
+
+
+        vector<Node*> allNodes = vector<Node*>();
+        while (getline(f, x)) {
+            stringstream ss;
+            for (int i = 0; i < x.length(); i++) {
+
+                if (x.at(i) == '<') {
+                    i++;
+                    bool ct = false;
+                    if (x[i] == '/') {
+                        ct = true;
+                        i++;
+                    }
+                    while (x[i] != '>') {
+                        ss << x[i];
+                        i++;
+                    }
+
+                    Node* n = new Node(((ct) ? NodeType::CLOSINGTAG : NodeType::OPENINGTAG), ss.str());
+
+                    allNodes.push_back(n);
+                }
+
+                else {
+
+                    while (x[i] != '<')
+                        ss << x[i++];
+
+                    Node* n = new Node(NodeType::DATA, ss.str());
+                    allNodes.push_back(n);
+                    i--;
+                }
             }
+
+        }
+        return allNodes;
+    }
+
+    //----------------------------------------------------------------------------------------
+
+    enum NodeType { OPENINGTAG, CLOSINGTAG, DATA, ELEMENT, REPEATEDTAG, DATAELEMENT };
+
+    class Node {
+
+    private:
+
+        NodeType type;
+        string data;
+        vector <Node*> children;
+        bool notfirst = false;
+
+    public:
+
+
+
+        Node(NodeType t, std::string d) {
+            this->type = t;
+            this->data = d;
+            this->children = vector<Node*>();
         }
 
+    };
+
+
+    int main()
+    {
+
     }
-}
-
-enum NodeType { OPENINGTAG, CLOSINGTAG, DATA, ELEMENT, REPEATEDTAG, DATAELEMENT };
-
- static class Node {
-
-private:
-
-    NodeType* type;
-    string data;
-    vector <Node*> children;
-
-public:
-
-    Node() {
-        this->type = nullptr;
-        this->data = nullptr;
-        this->children = vector<Node*>();
-    }
-
-
-   Node(NodeType* t, std::string d) {
-        this->type = t;
-       this->data = d;
-        this->children = vector<Node*>();
-    }
-
-
-};
-
