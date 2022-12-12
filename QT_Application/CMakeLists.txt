@@ -15,8 +15,15 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
+        linenumberarea.cpp
+        codeeditor.cpp
+        clickablelabel.cpp
         mainwindow.h
+        CodeEditor.h
+        linenumberarea.h
+        clickablelabel.h
         mainwindow.ui
+        resource.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
