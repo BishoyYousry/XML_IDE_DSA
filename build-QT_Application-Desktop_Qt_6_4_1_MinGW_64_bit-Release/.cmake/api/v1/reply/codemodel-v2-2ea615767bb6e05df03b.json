@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-e57160887eb312bab2fc.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "QT_Application",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "QT_Application::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QT_Application-Release-b8158e445bd7e764ffc2.json",
+					"name" : "QT_Application",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QT_Application_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QT_Application_autogen-Release-c2e0ace6883279829573.json",
+					"name" : "QT_Application_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "QT_Application_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-QT_Application_autogen_timestamp_deps-Release-d06732f21eb1299e9268.json",
+					"name" : "QT_Application_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Release",
+		"source" : "E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
