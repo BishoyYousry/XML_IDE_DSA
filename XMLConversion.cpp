@@ -14,12 +14,85 @@
 
 using namespace std;
 
+enum NodeType { OPENINGTAG, CLOSINGTAG, DATA, ELEMENT, REPEATEDTAG, DATAELEMENT };
+
+
+static class Node {
+
+public:
+
+    NodeType type;
+    string data;
+    vector <Node*> children;
+    bool notFirst;
+
+public:
+
+
+    Node(NodeType t, std::string d) {
+        this->type = t;
+        this->data = d;
+        this->children = vector<Node*>();
+
+    }
+
+};
+
+//--------------------------------------------------------------------------------------------
+
+string repeat(string st, int count) {
+    stringstream s;
+    for (int i = 0; i < count; i++) {
+        s << st;
+    }
+    return s.str();
+}
+
+//---------------------------------- Tree To JSON -----------------------------------------------------------
+
+ void treeToJson(Node* n, int TapCount, ostringstream &s) {
+
+     TapCount++;
+
+     s << repeat("    ", TapCount);
+     if (n->type == NodeType::DATA) {
+         s << "\"" + n->data + "\"";
+         return;
+     }
+
+     if (n->type == NodeType::DATAELEMENT) {
+         s << "\"" + n->data + "\": \"" + n->children[0]->data + "\"";
+     }
+
+     if (n->type == NodeType::REPEATEDTAG)
+         s << "[\n";
+     else
+         s << "{\n";
+
+     for (int i = 0; i < n->children.size(); i++) {
+
+         treeToJson(n->children[i], TapCount, s);
+
+         if (i < n->children.size() - 1)
+             s << ", \n";
+         else {
+
+             s << '\n';
+             s << repeat("    ", TapCount);
+
+             if (n->type == NodeType::REPEATEDTAG)
+                 s << "]";
+             else
+                 s << "}";
+         }
+     }
+}
 
 
 //--------------------- array to tree ------------------------------------------------------------
 
 
-    Node* arrToTree(vector<Node*> &arr) {
+    Node* arrToTree(vector<Node*> arr) {
 
         stack<Node*> stack ;
 
@@ -35,7 +108,7 @@ using namespace std;
                 }
 
                 top = ((stack.empty()) ? nullptr : stack.top());
-                if (!stack.empty() && (top->data)._Equal(current->data)) {
+                if (!stack.empty() && top->data._Equal(current->data)) {
                     top->type = NodeType::REPEATEDTAG;
                     if (temp->children.size() == 1)
                         top->children.push_back(temp->children[0]);
@@ -67,19 +140,16 @@ using namespace std;
             {
                 stack.push(current);
             }
-
-
         }
         return stack.top();
     }
 
     //--------------------------- xml to array -------------------------------------------------
 
+
     vector<Node*> XML_Arr(string xmlFile_name) {
 
         string x;
-        string y;
-
         ifstream f(xmlFile_name);
         ofstream fileCreated("Testf.txt");
 
@@ -108,8 +178,9 @@ using namespace std;
 
                 else {
 
-                    while (x[i] != '<')
+                    while (x[i] != '<') {
                         ss << x[i++];
+                    }
 
                     Node* n = new Node(NodeType::DATA, ss.str());
                     allNodes.push_back(n);
@@ -120,34 +191,25 @@ using namespace std;
         }
         return allNodes;
     }
+      
 
     //----------------------------------------------------------------------------------------
 
-    enum NodeType { OPENINGTAG, CLOSINGTAG, DATA, ELEMENT, REPEATEDTAG, DATAELEMENT };
+  
+    string xmlToJson(string xml) {
 
-    static class Node {
+        vector<Node*> arr = XML_Arr(xml);
+        Node* node = arrToTree(arr);
+        ostringstream sb;
+        treeToJson(node, 0, sb);
+        return "{\n" + sb.str() + "\n}";
+    }
 
-    public:
-
-        NodeType type;
-        string data;
-        vector <Node*> children;
-        bool notFirst ;
-
-    public:
-
-
-        Node(NodeType t, std::string d) {
-            this->type = t;
-            this->data = d;
-            this->children = vector<Node*>();
-            
-        }
-
-    };
-
+    //---------------------------------------------------------------------------------------
 
     int main()
     {
-
+      
+        string x = xmlToJson("XML.txt");
+        cout << x;
     }
