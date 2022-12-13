@@ -1,61 +1,296 @@
-#include <bits/stdc++.h>
-#include <unordered_map>
-
+#include<bits/stdc++.h>
 using namespace std;
 
-vector<int> encoding(string s1)
-{
-    unordered_map<string, int> table;
-    for (int i = 0; i <= 255; i++) {
-        string ch = "";
-        ch += char(i);
-        table[ch] = i;
-    }
- 
-    string p = "", c = "";
-    p += s1[0];
-    int code = 256;
-    vector<int> output_code;
-    for (int i = 0; i < s1.length(); i++) {
-        if (i != s1.length() - 1)
-            c += s1[i + 1];
-        if (table.find(p + c) != table.end()) {
-            p = p + c;
-        }
-        else {
-            output_code.push_back(table[p]);
-            table[p + c] = code;
-            code++;
-            p = c;
-        }
-        c = "";
-    }
-    output_code.push_back(table[p]);
-    return output_code;
-}
 
-string readFile(string path = "D:/ASU/Senior1/DSA/Project/Data_Structure_Project/XMLFile.xml")
+class Node
+{
+public:
+	int freq;
+	char c;
+	Node* left;
+	Node* right;
+	Node(int freq, char c)
+	{
+		this->freq = freq;
+		this->c = c;
+		this->left = nullptr;
+		this->right = nullptr;
+	}
+};
+
+enum SortSequence
+{
+	ASCENDING, 
+	DESCENDING
+};
+
+
+string readFile(string path = "XMLFile.xml")
 {
 	string line;
 	string wholeFile = "";
 	ifstream inputFile(path);
 	while (getline(inputFile, line))
-		wholeFile = wholeFile + line + "\n";
+		wholeFile += line + "\n";
 	return wholeFile;
 }
 
-void writeFile(vector<int>&encoded)
+void writeFile(string s)
 {
 	fstream outputFile;
 	outputFile.open("Sample.txt", ios::out);
-    for (int i = 0; i < encoded.size(); i++) 
-        outputFile << to_string(encoded[i]) << " ";
+	outputFile << s;
 }
 
 
-// int main()
-// {
-// 	string text = readFile();
-//     vector<int> encoded = encoding(text);
-//     writeFile(encoded);
-// }
+void merge(vector<Node*>& l, vector<Node*>& r, vector<Node*>& v, SortSequence ss)
+{
+	int i, j, k;
+	i = j = k = 0;
+	switch (ss)
+	{
+	case ASCENDING:
+		while (i < l.size() && j < r.size())
+		{
+			if (l[i]->freq <= r[j]->freq)	// Sort Ascending
+			{
+				v[k++] = l[i];
+				i++;
+			}
+			else
+			{
+				v[k++] = r[j];
+				j++;
+			}
+		}
+		break;
+	case DESCENDING:
+		while (i < l.size() && j < r.size())
+		{
+			if (l[i]->freq > r[j]->freq)	// Sort Descending
+			{
+				v[k++] = l[i];
+				i++;
+			}
+			else
+			{
+				v[k++] = r[j];
+				j++;
+			}
+		}
+	}
+	while (i < l.size()) v[k++] = l[i++];
+	while (j < r.size()) v[k++] = r[j++];
+}
+
+
+void mergeSort(vector<Node*>& v, SortSequence ss)
+{
+	int lSize = v.size() / 2;
+	int rSize = v.size() - lSize;
+	if (v.size() < 2) return;       //Base case
+	vector<Node*>lv(lSize);
+	vector<Node*>rv(rSize);
+	for (size_t i = 0; i < lSize; i++)
+		lv[i] = v[i];
+	for (size_t i = 0; i < rSize; i++)
+		rv[i] = v[lSize + i];
+	mergeSort(lv, ss);
+	mergeSort(rv, ss);
+	merge(lv, rv, v, ss);
+}
+
+
+priority_queue<pair<int, char>> get_chars_frq(string s)
+{
+	int charsFreq[256] = { 0 };
+	for (size_t i = 0; i < s.size(); i++)
+		charsFreq[(int)s[i]]++;
+	priority_queue<pair<int, char>>pq;
+	for (size_t i = 0; i < 256; i++)
+	{
+		if (charsFreq[i] == 0) continue;
+		pq.push({ charsFreq[i], (char)i });
+	}
+	return pq;
+}
+
+
+Node* make_huffman_tree(priority_queue<pair<int, char>>pq)
+{
+	vector<Node*>vect;
+	while (!pq.empty())
+	{
+		vect.push_back(new Node(pq.top().first, pq.top().second));
+		pq.pop();
+	}
+	//Now we have vector of nodes which is called vect
+	while (!vect.empty())
+	{
+		Node* leftNode = vect.back();
+		vect.pop_back();
+		Node* rightNode = vect.back();
+		vect.pop_back();
+		Node* parentNode = new Node(leftNode->freq + rightNode->freq, '~');
+		parentNode->left = leftNode;
+		parentNode->right = rightNode;
+		vect.push_back(parentNode);
+		mergeSort(vect, DESCENDING);	
+		if (vect.size() == 1) break;
+	}
+	return vect[0];
+}
+
+void char_to_binary(Node* root, vector<pair<char, string>>& codes, string s)
+{
+	if (!root) return;
+	if (root->c != '~')
+	{
+		codes.push_back({root->c, s});
+		return;
+	}
+	char_to_binary(root->left, codes, s + "0");
+	char_to_binary(root->right, codes, s + "1");
+}
+
+void print_codes(vector<pair<char, string>>& codes)
+{
+	for (auto i : codes)
+		cout << i.first << " -> " << i.second << endl;
+}
+
+template<typename T1, typename T2>
+int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
+{
+	auto it = std::find_if(codes.begin(), codes.end(),
+		[&](const auto& pair) { return pair.first == t; });
+	if (it != codes.end())
+		return it - codes.begin();
+	return -1;
+}
+
+string encode_str(string s, vector<pair<char, string>>& codes)
+{
+	string encodedStr = "";
+	for (size_t i = 0; i < codes.size(); i++)
+	{
+		/*We will add "(char)1", "(char)2", "(char)3" instead of '0', '1', '\n' respectively
+		to differentiate them among the binary
+		Ex: "'(char)1'1110'(char)2'10100" -> means that '0' -> 1110 and '1' -> 10100*/
+		if (codes[i].first == '0')
+			encodedStr = encodedStr + char(1) + codes[i].second;
+		else if (codes[i].first == '1')
+			encodedStr = encodedStr + char(2) + codes[i].second;
+		else if(codes[i].first == '\n')
+			encodedStr = encodedStr + char(3) + codes[i].second;
+		else 
+			encodedStr += codes[i].first + codes[i].second;
+	}
+
+	/*Make the first line for the data needed for decompression*/
+	encodedStr += '\n';
+
+	for (size_t i = 0; i < s.size(); i++)
+	{
+		int index = get_vector_index<char, string>(codes, s[i]);
+		encodedStr += codes[index].second;
+	}	
+	return encodedStr;
+}
+
+string decode_str(string symboledStr)
+{
+	vector<pair<string, char>>codes;
+	string buffer = "";
+	char currentChar;
+	int startIndex = symboledStr.find('\n');
+	int i = 0;
+	while (i != startIndex)		
+	{
+		currentChar = symboledStr[i];
+		i++;
+		while (symboledStr[i] == '0' || symboledStr[i] == '1')
+		{
+			buffer += symboledStr[i];
+			i++;
+		}
+		/*Substitute for (char)1, (char)2, (char)3 by '0', '1', '\n' as the original values*/
+		if(currentChar == (char)1)
+			codes.push_back({ buffer, '0' });
+		else if (currentChar == (char)2)
+			codes.push_back({ buffer, '1' });
+		else if (currentChar == (char)3)
+			codes.push_back({ buffer, '\n' });
+		else 
+			codes.push_back({ buffer, currentChar });
+		buffer = "";
+	}
+	
+	string binaryText = "";
+	/*Convert symbols to binary ASCII*/
+	for (size_t i = startIndex + 1; i < symboledStr.size(); i++)
+	{
+		bitset<8>x((int)symboledStr[i]);
+		binaryText += x.to_string();
+	}
+
+	/*Convert binary ASCII to the original chars*/
+	string text = "";
+	for (size_t i = 0; i < binaryText.size(); i++)	
+	{
+		buffer += binaryText[i];
+		int index = get_vector_index<string, char>(codes, buffer);
+		if (index != -1)
+		{
+			text += codes[index].second;
+			buffer = "";
+		}
+	}
+	return text;
+}
+
+string encoded_to_symbol(string encodedStr)
+{
+	string strBuffer = "";
+	string symboledStr = "";
+	//Search for the first '\n' to start symboling from the second line which is the compressed encoded data
+	int startIndex = encodedStr.find('\n');
+	//Store the first line only which is the data needed for decompression
+	for (size_t i = 0; i <= startIndex; i++)
+		symboledStr += encodedStr[i];
+	for (size_t i = startIndex + 1; i < encodedStr.size(); i++)
+	{
+		strBuffer += encodedStr[i];
+		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == strBuffer.size() - 1))
+		{
+			symboledStr += (char)stoi(strBuffer, 0, 2);
+			strBuffer = "";
+		}
+	}
+	return symboledStr;
+}
+
+void print_frq(priority_queue<pair<int, char>> pq)
+{
+	while (!pq.empty())
+	{
+		cout << pq.top().second << " -> " << pq.top().first << endl;
+		pq.pop();
+	}	
+}
+
+
+int main()
+{
+	string text = readFile();
+	priority_queue<pair<int, char>>pq = get_chars_frq(text);
+	print_frq(pq);
+	Node* root = make_huffman_tree(pq);
+	vector<pair<char, string>>codes;
+	char_to_binary(root, codes, "");
+	print_codes(codes);
+	string encodedStr = encode_str(text, codes);
+	string symboledStr = encoded_to_symbol(encodedStr);
+	string decodedStr = decode_str(symboledStr);
+	writeFile(decodedStr);
+}
