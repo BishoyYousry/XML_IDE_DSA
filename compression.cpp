@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
 class Node
 {
 public:
@@ -20,28 +19,19 @@ public:
 
 enum SortSequence
 {
-	ASCENDING, 
+	ASCENDING,
 	DESCENDING
 };
 
-
-string readFile(string path = "XMLFile.xml")
+template<typename T1, typename T2>
+int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
 {
-	string line;
-	string wholeFile = "";
-	ifstream inputFile(path);
-	while (getline(inputFile, line))
-		wholeFile += line + "\n";
-	return wholeFile;
+	auto it = std::find_if(codes.begin(), codes.end(),
+		[&](const auto& pair) { return pair.first == t; });
+	if (it != codes.end())
+		return it - codes.begin();
+	return -1;
 }
-
-void writeFile(string s)
-{
-	fstream outputFile;
-	outputFile.open("Sample.txt", ios::out);
-	outputFile << s;
-}
-
 
 void merge(vector<Node*>& l, vector<Node*>& r, vector<Node*>& v, SortSequence ss)
 {
@@ -83,7 +73,6 @@ void merge(vector<Node*>& l, vector<Node*>& r, vector<Node*>& v, SortSequence ss
 	while (j < r.size()) v[k++] = r[j++];
 }
 
-
 void mergeSort(vector<Node*>& v, SortSequence ss)
 {
 	int lSize = v.size() / 2;
@@ -100,7 +89,6 @@ void mergeSort(vector<Node*>& v, SortSequence ss)
 	merge(lv, rv, v, ss);
 }
 
-
 priority_queue<pair<int, char>> get_chars_frq(string s)
 {
 	int charsFreq[256] = { 0 };
@@ -114,7 +102,6 @@ priority_queue<pair<int, char>> get_chars_frq(string s)
 	}
 	return pq;
 }
-
 
 Node* make_huffman_tree(priority_queue<pair<int, char>>pq)
 {
@@ -135,7 +122,7 @@ Node* make_huffman_tree(priority_queue<pair<int, char>>pq)
 		parentNode->left = leftNode;
 		parentNode->right = rightNode;
 		vect.push_back(parentNode);
-		mergeSort(vect, DESCENDING);	
+		mergeSort(vect, DESCENDING);
 		if (vect.size() == 1) break;
 	}
 	return vect[0];
@@ -146,27 +133,11 @@ void char_to_binary(Node* root, vector<pair<char, string>>& codes, string s)
 	if (!root) return;
 	if (root->c != '~')
 	{
-		codes.push_back({root->c, s});
+		codes.push_back({ root->c, s });
 		return;
 	}
 	char_to_binary(root->left, codes, s + "0");
 	char_to_binary(root->right, codes, s + "1");
-}
-
-void print_codes(vector<pair<char, string>>& codes)
-{
-	for (auto i : codes)
-		cout << i.first << " -> " << i.second << endl;
-}
-
-template<typename T1, typename T2>
-int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
-{
-	auto it = std::find_if(codes.begin(), codes.end(),
-		[&](const auto& pair) { return pair.first == t; });
-	if (it != codes.end())
-		return it - codes.begin();
-	return -1;
 }
 
 string encode_str(string s, vector<pair<char, string>>& codes)
@@ -181,9 +152,9 @@ string encode_str(string s, vector<pair<char, string>>& codes)
 			encodedStr = encodedStr + char(1) + codes[i].second;
 		else if (codes[i].first == '1')
 			encodedStr = encodedStr + char(2) + codes[i].second;
-		else if(codes[i].first == '\n')
+		else if (codes[i].first == '\n')
 			encodedStr = encodedStr + char(3) + codes[i].second;
-		else 
+		else
 			encodedStr += codes[i].first + codes[i].second;
 	}
 
@@ -194,59 +165,8 @@ string encode_str(string s, vector<pair<char, string>>& codes)
 	{
 		int index = get_vector_index<char, string>(codes, s[i]);
 		encodedStr += codes[index].second;
-	}	
+	}
 	return encodedStr;
-}
-
-string decode_str(string symboledStr)
-{
-	vector<pair<string, char>>codes;
-	string buffer = "";
-	char currentChar;
-	int startIndex = symboledStr.find('\n');
-	int i = 0;
-	while (i != startIndex)		
-	{
-		currentChar = symboledStr[i];
-		i++;
-		while (symboledStr[i] == '0' || symboledStr[i] == '1')
-		{
-			buffer += symboledStr[i];
-			i++;
-		}
-		/*Substitute for (char)1, (char)2, (char)3 by '0', '1', '\n' as the original values*/
-		if(currentChar == (char)1)
-			codes.push_back({ buffer, '0' });
-		else if (currentChar == (char)2)
-			codes.push_back({ buffer, '1' });
-		else if (currentChar == (char)3)
-			codes.push_back({ buffer, '\n' });
-		else 
-			codes.push_back({ buffer, currentChar });
-		buffer = "";
-	}
-	
-	string binaryText = "";
-	/*Convert symbols to binary ASCII*/
-	for (size_t i = startIndex + 1; i < symboledStr.size(); i++)
-	{
-		bitset<8>x((int)symboledStr[i]);
-		binaryText += x.to_string();
-	}
-
-	/*Convert binary ASCII to the original chars*/
-	string text = "";
-	for (size_t i = 0; i < binaryText.size(); i++)	
-	{
-		buffer += binaryText[i];
-		int index = get_vector_index<string, char>(codes, buffer);
-		if (index != -1)
-		{
-			text += codes[index].second;
-			buffer = "";
-		}
-	}
-	return text;
 }
 
 string encoded_to_symbol(string encodedStr)
@@ -258,39 +178,78 @@ string encoded_to_symbol(string encodedStr)
 	//Store the first line only which is the data needed for decompression
 	for (size_t i = 0; i <= startIndex; i++)
 		symboledStr += encodedStr[i];
+
+	stack<int>charSUBIndeces;	// store the indeces in which SUB char appears
+
 	for (size_t i = startIndex + 1; i < encodedStr.size(); i++)
 	{
 		strBuffer += encodedStr[i];
 		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == strBuffer.size() - 1))
 		{
-			symboledStr += (char)stoi(strBuffer, 0, 2);
+			// char 26 which is SUB that makes a problem when the file is read in decompression
+			if (strBuffer == "00011010")
+			{
+				charSUBIndeces.push((i + 1) / 8);	//byte index = (bit index + 1) / 8
+			}
+			else
+			{				
+				symboledStr += (char)stoi(strBuffer, 0, 2);
+			}
 			strBuffer = "";
 		}
+	}
+
+	// insert the character (char)4 to separate btn the indeces of SUB char and the codes of chars
+	if(!charSUBIndeces.empty()) symboledStr.insert(0, 1, (char)4);	
+
+	// insert the indeces at the beginig of the file
+	while (!charSUBIndeces.empty())
+	{
+		symboledStr.insert(0, to_string(charSUBIndeces.top()));
+		charSUBIndeces.pop();
+		if(!charSUBIndeces.empty())
+			symboledStr.insert(0, 1, ' ');
 	}
 	return symboledStr;
 }
 
-void print_frq(priority_queue<pair<int, char>> pq)
+string readFile(string path = "XMLFile.xml")
 {
-	while (!pq.empty())
-	{
-		cout << pq.top().second << " -> " << pq.top().first << endl;
-		pq.pop();
-	}	
+	string line;
+	string wholeFile = "";
+	ifstream inputFile(path);
+	while (getline(inputFile, line))
+		wholeFile += line + "\n";
+	return wholeFile;
 }
 
+void writeFile(string s)
+{
+	fstream outputFile;
+	outputFile.open("Sample.hm", ios::out);
+	outputFile << s;
+}
+
+void print_codes(vector<pair<char, string>>& codes)
+{
+	for (auto i : codes)
+		cout << i.first << " -> " << i.second << endl;
+}
+
+string compress(string text)
+{
+	priority_queue<pair<int, char>>pq = get_chars_frq(text);
+	Node* root = make_huffman_tree(pq);
+	vector<pair<char, string>>codes;
+	char_to_binary(root, codes, "");
+	string encodedStr = encode_str(text, codes);
+	string symboledStr = encoded_to_symbol(encodedStr);
+	return symboledStr;
+}
 
 int main()
 {
 	string text = readFile();
-	priority_queue<pair<int, char>>pq = get_chars_frq(text);
-	print_frq(pq);
-	Node* root = make_huffman_tree(pq);
-	vector<pair<char, string>>codes;
-	char_to_binary(root, codes, "");
-	print_codes(codes);
-	string encodedStr = encode_str(text, codes);
-	string symboledStr = encoded_to_symbol(encodedStr);
-	string decodedStr = decode_str(symboledStr);
-	writeFile(decodedStr);
+	string symbols = compress(text);
+	writeFile(symbols);
 }
