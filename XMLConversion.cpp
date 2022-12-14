@@ -14,8 +14,11 @@
 
 using namespace std;
 
+//--------------------------------------- NODETYPE -------------------------------------------------
+
 enum NodeType { OPENINGTAG, CLOSINGTAG, DATA, ELEMENT, REPEATEDTAG, DATAELEMENT };
 
+//---------------------------------------- NODE ------------------------------------------------------
 
 static class Node {
 
@@ -38,7 +41,7 @@ public:
 
 };
 
-//--------------------------------------------------------------------------------------------
+//--------------------------------------- REPEAT -------------------------------------------------------
 
 string repeat(string st, int count) {
     stringstream s;
@@ -48,21 +51,29 @@ string repeat(string st, int count) {
     return s.str();
 }
 
-//---------------------------------- Tree To JSON -----------------------------------------------------------
+//----------------------------------- TREE TO JSON -----------------------------------------------------------
 
  void treeToJson(Node* n, int TapCount, ostringstream &s) {
 
      TapCount++;
 
      s << repeat("    ", TapCount);
-     if (n->type == NodeType::DATA) {
-         s << "\"" + n->data + "\"";
+     if (n->type == NodeType::DATA && typeid(n->data).name()!= "i") {
+         s << "\"" + n-> data + "\"";
          return;
      }
 
+
      if (n->type == NodeType::DATAELEMENT) {
+         if(typeid(n->children[0]->data).name() != "i")
          s << "\"" + n->data + "\": \"" + n->children[0]->data + "\"";
+         else
+             s << n->children[0]->data;
+
+         return;
      }
+
+     if (n->data != "") s << "\"" + n->data + "\": ";
 
      if (n->type == NodeType::REPEATEDTAG)
          s << "[\n";
@@ -89,7 +100,7 @@ string repeat(string st, int count) {
 }
 
 
-//--------------------- array to tree ------------------------------------------------------------
+//---------------------------------------- ARRAY TO TREE ----------------------------------------------------------
 
 
     Node* arrToTree(vector<Node*> arr) {
@@ -98,9 +109,11 @@ string repeat(string st, int count) {
 
         for (Node* current : arr) {
 
-            if (current-> type == 1) {
+            if (current-> type == NodeType::CLOSINGTAG) {
                 Node* temp = new Node(NodeType::ELEMENT, current-> data);
                 Node* top = stack.top();
+                stack.pop();
+
                 while (top-> type != NodeType::OPENINGTAG) {
                     temp-> children.push_back(top);
                     top = stack.top();
@@ -141,59 +154,56 @@ string repeat(string st, int count) {
                 stack.push(current);
             }
         }
+        
         return stack.top();
+       
     }
 
-    //--------------------------- xml to array -------------------------------------------------
+    //--------------------------- xml to array ------------------------------------------------------
 
 
     vector<Node*> XML_Arr(string xmlFile_name) {
 
-        string x;
-        ifstream f(xmlFile_name);
-        ofstream fileCreated("Testf.txt");
-
-
         vector<Node*> allNodes = vector<Node*>();
-        while (getline(f, x)) {
+
+        for (int i = 0; i < xmlFile_name.length(); i++) {
+            if (xmlFile_name[i] == ' ' || xmlFile_name[i] == '\n')
+                continue;
+
             stringstream ss;
-            for (int i = 0; i < x.length(); i++) {
 
-                if (x.at(i) == '<') {
+            if (xmlFile_name.at(i) == '<') {
+                i++;
+                bool ct = false;
+                if (xmlFile_name[i] == '/') {
+                    ct = true;
                     i++;
-                    bool ct = false;
-                    if (x[i] == '/') {
-                        ct = true;
-                        i++;
-                    }
-                    while (x[i] != '>') {
-                        ss << x[i];
-                        i++;
-                    }
-
-                    Node* n = new Node(((ct) ? NodeType::CLOSINGTAG : NodeType::OPENINGTAG), ss.str());
-
-                    allNodes.push_back(n);
+                }
+                while (xmlFile_name[i] != '>') {
+                    ss << xmlFile_name[i];
+                    i++;
                 }
 
-                else {
+                Node* n = new Node(((ct) ? NodeType::CLOSINGTAG : NodeType::OPENINGTAG), ss.str());
 
-                    while (x[i] != '<') {
-                        ss << x[i++];
-                    }
-
-                    Node* n = new Node(NodeType::DATA, ss.str());
-                    allNodes.push_back(n);
-                    i--;
-                }
+                allNodes.push_back(n);
             }
 
+            else {
+
+                while (xmlFile_name[i] != '<')
+                    ss << xmlFile_name[i++];
+
+                Node* n = new Node(NodeType::DATA, ss.str());
+                allNodes.push_back(n);
+                i--;
+            }
         }
+
         return allNodes;
     }
-      
 
-    //----------------------------------------------------------------------------------------
+
 
   
     string xmlToJson(string xml) {
@@ -205,11 +215,29 @@ string repeat(string st, int count) {
         return "{\n" + sb.str() + "\n}";
     }
 
-    //---------------------------------------------------------------------------------------
+    //---------------------------------- XML TO String -----------------------------------------------------
+
+    string XMLToString(string fileName) {
+        stringstream ss;
+        string x;
+        ifstream f(fileName);
+
+        while (getline(f, x)) {
+            ss << x;
+        }
+        return ss.str();
+    }
+
+    //----------------------------------- MAIN -----------------------------------------------------------------
+
 
     int main()
     {
-      
-        string x = xmlToJson("XML.txt");
-        cout << x;
+        string y;
+        string x = XMLToString("XML.txt");
+        y = xmlToJson(x);
+        cout << y;
     }
+
+
+//-----------------------------------------------------------------------------------------------------------
