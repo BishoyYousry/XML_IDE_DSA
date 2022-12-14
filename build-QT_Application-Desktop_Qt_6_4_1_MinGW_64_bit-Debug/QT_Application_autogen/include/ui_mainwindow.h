@@ -85,7 +85,7 @@ public:
     QPushButton *pushButton_PostSearch;
     QFrame *frame_14;
     QHBoxLayout *horizontalLayout;
-    QPushButton *pushButton_Save;
+    QPushButton *pushButton_SaveAs;
     QVBoxLayout *verticalLayout_2;
     QGroupBox *groupBox_3;
     QHBoxLayout *horizontalLayout_18;
@@ -653,18 +653,18 @@ public:
         horizontalLayout = new QHBoxLayout(frame_14);
         horizontalLayout->setObjectName("horizontalLayout");
         horizontalLayout->setContentsMargins(7, 4, 7, 4);
-        pushButton_Save = new QPushButton(frame_14);
-        pushButton_Save->setObjectName("pushButton_Save");
-        sizePolicy2.setHeightForWidth(pushButton_Save->sizePolicy().hasHeightForWidth());
-        pushButton_Save->setSizePolicy(sizePolicy2);
-        pushButton_Save->setMinimumSize(QSize(0, 0));
-        pushButton_Save->setMaximumSize(QSize(16777215, 16777215));
-        pushButton_Save->setFont(font2);
-        pushButton_Save->setCursor(QCursor(Qt::PointingHandCursor));
-        pushButton_Save->setMouseTracking(true);
-        pushButton_Save->setTabletTracking(true);
+        pushButton_SaveAs = new QPushButton(frame_14);
+        pushButton_SaveAs->setObjectName("pushButton_SaveAs");
+        sizePolicy2.setHeightForWidth(pushButton_SaveAs->sizePolicy().hasHeightForWidth());
+        pushButton_SaveAs->setSizePolicy(sizePolicy2);
+        pushButton_SaveAs->setMinimumSize(QSize(0, 0));
+        pushButton_SaveAs->setMaximumSize(QSize(16777215, 16777215));
+        pushButton_SaveAs->setFont(font2);
+        pushButton_SaveAs->setCursor(QCursor(Qt::PointingHandCursor));
+        pushButton_SaveAs->setMouseTracking(true);
+        pushButton_SaveAs->setTabletTracking(true);
 
-        horizontalLayout->addWidget(pushButton_Save);
+        horizontalLayout->addWidget(pushButton_SaveAs);
 
 
         verticalLayout_3->addWidget(frame_14);
@@ -760,7 +760,7 @@ public:
         pushButton_MutualFollowers->setText(QCoreApplication::translate("MainWindow", "Mutual Followers", nullptr));
         pushButton_2ndDegreeFollowers->setText(QCoreApplication::translate("MainWindow", "2nd Degree Followers", nullptr));
         pushButton_PostSearch->setText(QCoreApplication::translate("MainWindow", "Post Search", nullptr));
-        pushButton_Save->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
+        pushButton_SaveAs->setText(QCoreApplication::translate("MainWindow", "Save As", nullptr));
         groupBox_3->setTitle(QString());
         label_XMLOutput->setText(QCoreApplication::translate("MainWindow", "XML Output", nullptr));
     } // retranslateUi

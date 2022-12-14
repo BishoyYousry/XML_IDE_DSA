@@ -2014,7 +2014,7 @@
                   <number>4</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="pushButton_Save">
+                  <widget class="QPushButton" name="pushButton_SaveAs">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2050,7 +2050,7 @@
                     <bool>true</bool>
                    </property>
                    <property name="text">
-                    <string>Save</string>
+                    <string>Save As</string>
                    </property>
                   </widget>
                  </item>

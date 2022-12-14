@@ -3,6 +3,9 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mmc:Q_OBJECT
  mdp:E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/mainwindow.h
  mdp:E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/moc_predefs.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/QDebug
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/QDir
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/QFile
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/QList
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/QObject
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/QRect
@@ -21,6 +24,7 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qbytearrayalgorithms.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qbytearraylist.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qbytearrayview.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qcalendar.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qchar.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qcompare.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qcompare_impl.h
@@ -32,7 +36,12 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qcontiguouscache.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qcoreevent.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qdatastream.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qdatetime.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qdebug.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qdir.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qfile.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qfiledevice.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qfileinfo.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qflags.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qforeach.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qgenericatomic.h
@@ -46,6 +55,7 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qiterator.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qline.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qlist.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qlocale.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qlogging.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qmap.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qmargins.h
@@ -96,12 +106,16 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qvariant.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qvarlengtharray.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtCore/qversiontagging.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/QClipboard
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/QIcon
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/QMouseEvent
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/QPixmap
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/QTransform
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qabstracttextdocumentlayout.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qaction.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qbitmap.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qbrush.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qclipboard.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qcolor.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qcursor.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qevent.h
@@ -141,17 +155,26 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qvectornd.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qwindowdefs.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtGui/qwindowdefs_win.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QFileDialog
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QGraphicsDropShadowEffect
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QLabel
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QMainWindow
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QMessageBox
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QPlainTextEdit
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QProgressDialog
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QScrollArea
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/QWidget
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qabstractscrollarea.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qdialog.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qfiledialog.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qframe.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qgraphicseffect.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qlabel.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qmainwindow.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qmessagebox.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qplaintextedit.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qprogressdialog.h
+ mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qscrollarea.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qsizepolicy.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qtabwidget.h
  mdp:D:/programs/QT/6.4.1/mingw_64/include/QtWidgets/qtextedit.h
@@ -182,6 +205,7 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/c++0x_warning.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/char_traits.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/charconv.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/codecvt.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/concept_check.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/cpp_type_traits.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/cxxabi_forced.h
@@ -191,6 +215,10 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/exception.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/exception_defines.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/exception_ptr.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fs_dir.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fs_fwd.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fs_ops.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/fs_path.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/functexcept.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/functional_hash.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/hash_bytes.h
@@ -200,8 +228,11 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/list.tcc
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_classes.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_classes.tcc
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_conv.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_facets.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_facets.tcc
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_facets_nonio.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/locale_facets_nonio.tcc
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/localefwd.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/max_size_type.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/memoryfwd.h
@@ -214,6 +245,7 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/postypes.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/predefined_ops.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/ptr_traits.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/quoted_string.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/range_access.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/ranges_algo.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/bits/ranges_algobase.h
@@ -263,12 +295,14 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/chrono
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/clocale
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cmath
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/codecvt
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/compare
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/concepts
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cstddef
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cstdint
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cstdlib
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cstring
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ctime
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cwchar
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cwctype
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/debug/assertions.h
@@ -282,13 +316,16 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ext/numeric_traits.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ext/string_conversions.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ext/type_traits.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/filesystem
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/functional
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/initializer_list
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/iomanip
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/ios
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/iosfwd
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/iterator
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/limits
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/list
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/locale
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/map
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/memory
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/new
@@ -305,6 +342,7 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/streambuf
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/string
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/string_view
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/system_error
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/tr1/bessel_function.tcc
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/tr1/beta_function.tcc
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/tr1/ell_integral.tcc
@@ -333,7 +371,9 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/ctype_inline.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/gthr-default.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/gthr.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/messages_members.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/os_defines.h
+ mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32/bits/time_members.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stdarg.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stdbool.h
  mdp:D:/programs/QT/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stddef.h
@@ -376,6 +416,7 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/ma
  mdp:D:/programs/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h
  mdp:E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/CodeEditor.h
  mdp:E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/clickablelabel.h
+E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/main.cpp
 E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/codeeditor.h
 E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/CodeEditor.h
  mmc:Q_OBJECT
@@ -742,7 +783,6 @@ E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/Co
  mdp:D:/programs/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h
  mdp:D:/programs/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h
  mdp:D:/programs/QT/Tools/mingw1120_64/x86_64-w64-mingw32/include/wctype.h
-E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/main.cpp
 E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/mainwindow.cpp
  uic:./ui_mainwindow.h
 E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/LineNumberArea.cpp

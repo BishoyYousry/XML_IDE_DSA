@@ -4,4 +4,7 @@
         <file>Icons/delete.png</file>
         <file>Icons/copy.png</file>
     </qresource>
+    <qresource prefix="/sample">
+        <file>sample/sample.xml</file>
+    </qresource>
 </RCC>

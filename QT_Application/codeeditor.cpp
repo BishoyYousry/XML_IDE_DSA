@@ -26,7 +26,7 @@ int CodeEditor::lineNumberAreaWidth()
         ++digits;
     }
 
-    int space = 3 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
+    int space = 15 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
 
     return space;
 }
@@ -70,14 +70,13 @@ void CodeEditor::highlightCurrentLine()
         selection.cursor.clearSelection();
         extraSelections.append(selection);
     }
-
     setExtraSelections(extraSelections);
 }
 
 void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
     QPainter painter(lineNumberArea);
-  //  painter.fillRect(event->rect(), Qt::lightGray);
+    painter.fillRect(event->rect(), Qt::lightGray);
     QTextBlock block = firstVisibleBlock();
        int blockNumber = block.blockNumber();
        int top = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
@@ -87,7 +86,7 @@ void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
                 QString number = QString::number(blockNumber + 1);
                 painter.setPen(Qt::black);
                 painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(),
-                                 Qt::AlignRight, number);
+                                 Qt::AlignCenter, number);
             }
 
             block = block.next();

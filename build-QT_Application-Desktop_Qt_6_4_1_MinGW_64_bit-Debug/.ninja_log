@@ -1,27 +1,29 @@
 # ninja log v5
-12	815	6925818331279314	QT_Application_autogen/timestamp	7e0ca0ead2467eb3
-12	815	6925818331279314	QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
-12	815	6925818331279314	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/timestamp	7e0ca0ead2467eb3
-12	815	6925818331279314	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
-819	5447	6925818378971097	CMakeFiles/QT_Application.dir/QT_Application_autogen/mocs_compilation.cpp.obj	2383bd35249e4abb
-816	5441	6925818378367483	CMakeFiles/QT_Application.dir/main.cpp.obj	2f4719e0ac640ccd
-825	5859	6925818383232764	CMakeFiles/QT_Application.dir/mainwindow.cpp.obj	dfed05cfd158fcc
-5859	6966	6925818394260659	QT_Application.exe	963ed6a9755a55ef
-1	1808	6925773297942282	build.ninja	2b29341a8a7d3f20
-268	363	6925773301933327	QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp	125902a4fa88d9e0
-268	363	6925773301933327	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp	125902a4fa88d9e0
-832	2164	6925818345982037	CMakeFiles/QT_Application.dir/QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ebe43a687bf76e88
+19	935	6927068864003572	QT_Application_autogen/timestamp	7e0ca0ead2467eb3
+19	935	6927068864003572	QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
+19	935	6927068864003572	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/timestamp	7e0ca0ead2467eb3
+19	935	6927068864003572	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
+942	9436	6927068949905201	CMakeFiles/QT_Application.dir/QT_Application_autogen/mocs_compilation.cpp.obj	2383bd35249e4abb
+946	9642	6927068952032934	CMakeFiles/QT_Application.dir/main.cpp.obj	2f4719e0ac640ccd
+968	10035	6927068955975596	CMakeFiles/QT_Application.dir/mainwindow.cpp.obj	dfed05cfd158fcc
+10036	10501	6927068960530513	QT_Application.exe	963ed6a9755a55ef
+2	8251	6926596534870788	build.ninja	2b29341a8a7d3f20
+235	379	6926034834413253	QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp	125902a4fa88d9e0
+235	379	6926034834413253	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp	125902a4fa88d9e0
+971	4808	6927068902954121	CMakeFiles/QT_Application.dir/QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ebe43a687bf76e88
 821	2874	6925194844322466	CMakeFiles/QT_Application.dir/LineNumberArea.cpp.obj	4df0a53f7ea629e4
-822	5825	6925818382910518	CMakeFiles/QT_Application.dir/codeeditor.cpp.obj	9ccadf1fcaac073
-829	5298	6925818377574557	CMakeFiles/QT_Application.dir/linenumberarea.cpp.obj	8d1097b9937a8551
-836	5305	6925818377713173	CMakeFiles/QT_Application.dir/clickablelabel.cpp.obj	3dee082c68f921e1
-14	803	6925822333812355	QT_Application_autogen/timestamp	7e0ca0ead2467eb3
-14	803	6925822333812355	QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
-14	803	6925822333812355	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/timestamp	7e0ca0ead2467eb3
-14	803	6925822333812355	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
-832	2060	6925822347495435	CMakeFiles/QT_Application.dir/QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ebe43a687bf76e88
-822	4909	6925822376165259	CMakeFiles/QT_Application.dir/linenumberarea.cpp.obj	8d1097b9937a8551
-835	4988	6925822377078131	CMakeFiles/QT_Application.dir/clickablelabel.cpp.obj	3dee082c68f921e1
-819	5325	6925822380503167	CMakeFiles/QT_Application.dir/main.cpp.obj	2f4719e0ac640ccd
-804	5496	6925822382142016	CMakeFiles/QT_Application.dir/QT_Application_autogen/mocs_compilation.cpp.obj	2383bd35249e4abb
-825	5698	6925822384162495	CMakeFiles/QT_Application.dir/codeeditor.cpp.obj	9ccadf1fcaac073
+960	9060	6927068946168641	CMakeFiles/QT_Application.dir/codeeditor.cpp.obj	9ccadf1fcaac073
+964	8698	6927068942228851	CMakeFiles/QT_Application.dir/linenumberarea.cpp.obj	8d1097b9937a8551
+975	9019	6927068945764761	CMakeFiles/QT_Application.dir/clickablelabel.cpp.obj	3dee082c68f921e1
+13	539	6927074206153753	QT_Application_autogen/timestamp	7e0ca0ead2467eb3
+13	539	6927074206153753	QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
+13	539	6927074206153753	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/timestamp	7e0ca0ead2467eb3
+13	539	6927074206153753	E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/mocs_compilation.cpp	7e0ca0ead2467eb3
+612	3906	6927074239468915	CMakeFiles/QT_Application.dir/QT_Application_autogen/EWIEGA46WW/qrc_resource.cpp.obj	ebe43a687bf76e88
+605	8983	6927074291127305	CMakeFiles/QT_Application.dir/linenumberarea.cpp.obj	8d1097b9937a8551
+631	9155	6927074292240169	CMakeFiles/QT_Application.dir/clickablelabel.cpp.obj	3dee082c68f921e1
+596	9249	6927074293857400	CMakeFiles/QT_Application.dir/codeeditor.cpp.obj	9ccadf1fcaac073
+609	10016	6927074301236586	CMakeFiles/QT_Application.dir/mainwindow.cpp.obj	dfed05cfd158fcc
+546	10113	6927074302558425	CMakeFiles/QT_Application.dir/main.cpp.obj	2f4719e0ac640ccd
+553	10140	6927074302840590	CMakeFiles/QT_Application.dir/QT_Application_autogen/mocs_compilation.cpp.obj	2383bd35249e4abb
+10141	10722	6927074308615973	QT_Application.exe	963ed6a9755a55ef

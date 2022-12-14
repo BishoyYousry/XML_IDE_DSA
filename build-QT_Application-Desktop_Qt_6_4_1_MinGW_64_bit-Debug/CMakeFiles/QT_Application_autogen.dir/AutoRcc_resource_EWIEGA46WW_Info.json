@@ -7,6 +7,7 @@
 	"INCLUDE_DIR" : "E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/build-QT_Application-Desktop_Qt_6_4_1_MinGW_64_bit-Debug/QT_Application_autogen/include",
 	"INPUTS" : 
 	[
+		"E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/sample/sample.xml",
 		"E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/Icons/delete.png",
 		"E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/Icons/MainWindow.jpg",
 		"E:/Senior 1/Data Structure & Algorithms/Data_Structure_Project/QT_Application/Icons/copy.png"

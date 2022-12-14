@@ -1,6 +1,4 @@
 #include "clickablelabel.h"
-#include <QMouseEvent>
-#include <QRect>>
 
 ClickableLabel::ClickableLabel(QWidget* parent, Qt::WindowFlags f): QLabel(parent)
 {
