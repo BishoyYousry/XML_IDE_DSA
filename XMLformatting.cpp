@@ -27,10 +27,15 @@ string one_line_file_handling(string input) {
 	string organizedInput;
 	int flag = 0; //handle the case when 2 closing tags come consecutively
 	while (getline(in, y)) {
+		//handle multiple data lines
+		if (y[0] != '<')
+			y.insert(0, "\n");
 		for (int i = 0; i <= y.length(); i++) {
 			//at the end of each tag add add newline
-			if (y[i] == '>')
+			if (y[i] == '>') 
+			{
 				y.insert((i + 1), "\n");
+			}
 			//at the beginning of the closing tag add newline (to separete the data from the closing tag) 
 			else if (y[i] == '<' && y[i+1] == '/')
 			{
@@ -43,6 +48,7 @@ string one_line_file_handling(string input) {
 			}
 			else if (y[i] == '<' && y[i + 1] != '/')
 				flag = 0;
+
 		}
 		//saving lines to the output string (organiedInput)
 		for (int i = 0; i < y.length(); i++) {
@@ -70,10 +76,12 @@ string formatting(string input) {
 			space.push_back(' ');
 			space.push_back(' ');
 			space.push_back(' ');
+			space.push_back(' ');
 		}
 		//if the line is close tag
 		else if (z[0] == '<' && z[1] == '/')
 		{
+			space.pop_back();
 			space.pop_back();
 			space.pop_back();
 			space.pop_back();
