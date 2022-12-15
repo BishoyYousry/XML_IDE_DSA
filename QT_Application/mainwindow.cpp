@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
 
@@ -313,7 +312,7 @@ void MainWindow::on_pushButton_Format_clicked()
     }
     /*else
     {
-        QString output = format(text);
+         QString output = QString::fromStdString(formatting(text.toStdString()));
          write_codeeditor(XMLOutput,output);
     }*/
 }
@@ -328,7 +327,9 @@ void MainWindow::on_pushButton_Minify_clicked()
     }
     /*else
     {
-        QString output = minify(text);
+        //To convert from String to QString, use fromStdString
+        //To convert from QString to String use toStdString()
+        QString output = QString::fromStdString(xml_minifying(text.toStdString()));
         write_codeeditor(XMLOutput,output);
     }*/
 }
@@ -343,7 +344,7 @@ void MainWindow::on_pushButton_JSON_clicked()
     }
     /*else
     {
-        QString output = xml2json(text);
+        QString output = QString::fromStdString(xmlToJson(text.toStdString()));
         write_codeeditor(XMLOutput,output);
     }*/
 }
