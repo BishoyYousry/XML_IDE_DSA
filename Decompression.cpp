@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include"Decompress.h"
 using namespace std;
 
 template<typename T1, typename T2>
@@ -18,6 +19,7 @@ string readFile(string path = "Sample.hm")
 	ifstream inputFile(path);
 	while (getline(inputFile, line))
 		wholeFile += line + "\n";
+	//wholeFile = wholeFile.erase(wholeFile.size() - 1, 2);
 	return wholeFile;
 }
 
@@ -28,12 +30,25 @@ void writeFile(string s)
 	outputFile << s;
 }
 
-vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>&charSUBIndeces)
+vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& charSUBIndeces, int& lastSymbolBytes)
 {
-	/*Store the indeces of SUB char in the vector -> charSUBIndeces*/
 	int i = 0;
 	string buffer = "";
-	char currentChar = symboledStr[0], previous = currentChar;
+	/*Extract no. of bytes of the last symbol*/
+	while (symboledStr[i] != ' ' && symboledStr[i] != (char)4)
+	{
+		buffer += symboledStr[i];
+		i++;
+	}
+	if (buffer.size())
+	{
+		lastSymbolBytes = stoi(buffer);
+		i++;
+	}
+		
+	buffer = "";
+	char currentChar = symboledStr[i], previous = currentChar;
+	/*Extract the indeces of SUB char in the vector -> charSUBIndeces*/
 	while (previous != (char)4)
 	{
 		if (currentChar != ' ' && currentChar != (char)4) buffer += currentChar;
@@ -45,16 +60,10 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>&c
 		previous = currentChar;
 		currentChar = symboledStr[++i];
 	}
-	
-	/*Erase the indeces of SUB char*/
-	while(symboledStr[0] != (char)4)
-		symboledStr.erase(0, 1);
-	symboledStr.erase(0, 1);
 
 	/*Get characters codes*/
 	vector<pair<string, char>>codes;
 	int startIndex = symboledStr.find('\n');
-	i = 0;
 	while (i != startIndex)
 	{
 		currentChar = symboledStr[i];
@@ -78,23 +87,72 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>&c
 	return codes;
 }
 
-string symbols_to_binary_str(string& symboledStr, vector<int>charSUBIndeces)
+string symbols_to_binary_str(string& symboledStr, vector<int>charSUBIndeces, int lastSymbolBytes)
 {
 	string binaryText = "";
 	int startIndex = symboledStr.find('\n');
-	int SUBIndex = 0;
+	int SUBIndex = 0, countSymbols = 0;		// To calculate the correct index of SUB char in encoding
 	/*Convert symbols to binary ASCII*/
 	for (size_t i = startIndex + 1; i < symboledStr.size(); i++)
 	{
 		/*If the current index is found in the vector charSUBIndeces then insert "00011010" -> SUB char*/
-		if (!charSUBIndeces.empty() && charSUBIndeces[SUBIndex] == i)
+		if (SUBIndex < charSUBIndeces.size() && charSUBIndeces[SUBIndex] == countSymbols)
 		{
 			binaryText.insert(i, "00011010");
 			i += 8;
 			SUBIndex++;
 		}
-		bitset<8>x((int)symboledStr[i]);
-		binaryText += x.to_string();
+		else if (i == symboledStr.size() - 2)	/*The last symbol*/
+		{
+			if (lastSymbolBytes == 1)
+			{
+				bitset<1>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else if (lastSymbolBytes == 2)
+			{
+				bitset<2>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else if (lastSymbolBytes == 3)
+			{
+				bitset<3>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else if (lastSymbolBytes == 4)
+			{
+				bitset<4>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else if (lastSymbolBytes == 5)
+			{
+				bitset<5>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else if (lastSymbolBytes == 6)
+			{
+				bitset<6>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else if (lastSymbolBytes == 7)
+			{
+				bitset<7>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			else
+			{
+				bitset<8>x((int)symboledStr[i]);
+				binaryText += x.to_string();
+			}
+			countSymbols++;
+			i++;
+		}
+		else if (i != symboledStr.size() - 2)
+		{
+			bitset<8>x((int)symboledStr[i]);
+			binaryText += x.to_string();
+			countSymbols++;
+		}
 	}
 	return binaryText;
 }
@@ -117,11 +175,12 @@ string binary_to_text(vector<pair<string, char>>codes, string binaryText)
 }
 
 
-string decompress(string&symboledStr)
+string decompress(string& symboledStr)
 {
 	vector<int>charSUBIndeces;
-	vector<pair<string, char>>codes = extract_char_codes(symboledStr, charSUBIndeces);
-	string binaryText = symbols_to_binary_str(symboledStr, charSUBIndeces);
+	int lastSymbolBytes = 8;	//Default value
+	vector<pair<string, char>>codes = extract_char_codes(symboledStr, charSUBIndeces, lastSymbolBytes);
+	string binaryText = symbols_to_binary_str(symboledStr, charSUBIndeces, lastSymbolBytes);
 	string text = binary_to_text(codes, binaryText);
 	return text;
 }
