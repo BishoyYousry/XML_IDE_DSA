@@ -1,27 +1,26 @@
 #include<bits/stdc++.h>
+#include"Compress.h"
 using namespace std;
 
-class Node
-{
-public:
-	int freq;
-	char c;
-	Node* left;
-	Node* right;
-	Node(int freq, char c)
-	{
-		this->freq = freq;
-		this->c = c;
-		this->left = nullptr;
-		this->right = nullptr;
-	}
-};
 
-enum SortSequence
+string readFile(string path = "XMLFile.xml")
 {
-	ASCENDING,
-	DESCENDING
-};
+	string line;
+	string wholeFile = "";
+	ifstream inputFile(path);
+	while (getline(inputFile, line))
+		wholeFile += line + "\n";
+	wholeFile = wholeFile.erase(wholeFile.size() - 1, 1);
+	return wholeFile;
+}
+
+void writeFile(string s)
+{
+	fstream outputFile;
+	outputFile.open("Sample.hm", ios::out);
+	outputFile << s;
+}
+
 
 template<typename T1, typename T2>
 int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
@@ -159,8 +158,8 @@ string encode_str(string s, vector<pair<char, string>>& codes)
 	}
 
 	/*Make the first line for the data needed for decompression*/
+	/*Replace the characters by codes*/
 	encodedStr += '\n';
-
 	for (size_t i = 0; i < s.size(); i++)
 	{
 		int index = get_vector_index<char, string>(codes, s[i]);
@@ -178,56 +177,50 @@ string encoded_to_symbol(string encodedStr)
 	//Store the first line only which is the data needed for decompression
 	for (size_t i = 0; i <= startIndex; i++)
 		symboledStr += encodedStr[i];
+	// insert the character (char)4 to separate btn the indeces of SUB char and the codes of chars
+	symboledStr.insert(0, 1, (char)4);
 
 	stack<int>charSUBIndeces;	// store the indeces in which SUB char appears
-
+	int countSymbols = 0;
+	string noOfBytesLastSymbol;
 	for (size_t i = startIndex + 1; i < encodedStr.size(); i++)
 	{
 		strBuffer += encodedStr[i];
-		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == strBuffer.size() - 1))
+		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == encodedStr.size() - 1))
 		{
 			// char 26 which is SUB that makes a problem when the file is read in decompression
 			if (strBuffer == "00011010")
 			{
-				charSUBIndeces.push((i + 1) / 8);	//byte index = (bit index + 1) / 8
+				charSUBIndeces.push(countSymbols);
 			}
+			/*We must store no. of bytes of The last group of bytes*/
+			else if (/*strBuffer.size() < 8 && */i == encodedStr.size() - 1)
+			{
+				/*Last symbol must not be writen in 8 bits
+				so we will store the no. of bytes of this symbol in the 1st line*/
+				noOfBytesLastSymbol = to_string(strBuffer.size()) + " ";
+				symboledStr += (char)stoi(strBuffer, 0, 2);	// Store the symbol
+			}
+
 			else
-			{				
+			{
 				symboledStr += (char)stoi(strBuffer, 0, 2);
 			}
 			strBuffer = "";
+			countSymbols++;
 		}
 	}
 
-	// insert the character (char)4 to separate btn the indeces of SUB char and the codes of chars
-	if(!charSUBIndeces.empty()) symboledStr.insert(0, 1, (char)4);	
-
-	// insert the indeces at the beginig of the file
+	// insert the indeces of SUB char at the beginig of the file but after the last symbol bytes
 	while (!charSUBIndeces.empty())
 	{
 		symboledStr.insert(0, to_string(charSUBIndeces.top()));
 		charSUBIndeces.pop();
-		if(!charSUBIndeces.empty())
+		if (!charSUBIndeces.empty())
 			symboledStr.insert(0, 1, ' ');
 	}
+	symboledStr.insert(0, noOfBytesLastSymbol);
 	return symboledStr;
-}
-
-string readFile(string path = "XMLFile.xml")
-{
-	string line;
-	string wholeFile = "";
-	ifstream inputFile(path);
-	while (getline(inputFile, line))
-		wholeFile += line + "\n";
-	return wholeFile;
-}
-
-void writeFile(string s)
-{
-	fstream outputFile;
-	outputFile.open("Sample.hm", ios::out);
-	outputFile << s;
 }
 
 void print_codes(vector<pair<char, string>>& codes)
