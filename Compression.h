@@ -1,8 +1,9 @@
 #ifndef COMPRESSION_H
 #define COMPRESSION_H
-
-#include<bits/stdc++.h>
 using namespace std;
+#include<bits/stdc++.h>
+
+#define ASCII_26	"00011010"
 
 class Node
 {

@@ -2,25 +2,26 @@
 #include"Compression.h"
 using namespace std;
 
-string readFile(string path = "XMLFile.xml")
-{
-	string line;
-	string wholeFile = "";
-	ifstream inputFile(path);
-	while (getline(inputFile, line))
-		wholeFile += line + "\n";
-	wholeFile = wholeFile.erase(wholeFile.size() - 1, 1);
-	return wholeFile;
-}
+// string readFile(string path = "XMLFile.xml")
+// {
+// 	string line;
+// 	string wholeFile = "";
+// 	ifstream inputFile(path);
+// 	while (getline(inputFile, line))
+// 		wholeFile += line + "\n";
+// 	wholeFile = wholeFile.erase(wholeFile.size() - 1, 1);
+// 	return wholeFile;
+// }
 
-void writeFile(string s)
-{
-	fstream outputFile;
-	outputFile.open("Sample.hm", ios::out);
-	outputFile << s;
-}
+// void writeFile(string s)
+// {
+// 	fstream outputFile;
+// 	outputFile.open("Sample.hm", ios::out);
+// 	outputFile << s;
+// }
 
-
+/*Time complexity = O(log(n))*/
+/*Space complexity = O(1)*/
 template<typename T1, typename T2>
 int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
 {
@@ -30,6 +31,7 @@ int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
 		return it - codes.begin();
 	return -1;
 }
+
 
 void merge(vector<Node*>& l, vector<Node*>& r, vector<Node*>& v, SortSequence ss)
 {
@@ -71,6 +73,8 @@ void merge(vector<Node*>& l, vector<Node*>& r, vector<Node*>& v, SortSequence ss
 	while (j < r.size()) v[k++] = r[j++];
 }
 
+/*Time complexity = O(nlog(n))*/
+/*Space complexity = O(n)*/
 void mergeSort(vector<Node*>& v, SortSequence ss)
 {
 	int lSize = v.size() / 2;
@@ -87,6 +91,8 @@ void mergeSort(vector<Node*>& v, SortSequence ss)
 	merge(lv, rv, v, ss);
 }
 
+/*Time complexity = O(1)*/
+/*Space complexity = O(n), n -> no. of different chars in the original file*/
 priority_queue<pair<int, char>> get_chars_frq(string s)
 {
 	int charsFreq[256] = { 0 };
@@ -101,6 +107,8 @@ priority_queue<pair<int, char>> get_chars_frq(string s)
 	return pq;
 }
 
+/*Time complexity = O(n)*/
+/*Space complexity = O(n)*/
 Node* make_huffman_tree(priority_queue<pair<int, char>>pq)
 {
 	vector<Node*>vect;
@@ -126,6 +134,8 @@ Node* make_huffman_tree(priority_queue<pair<int, char>>pq)
 	return vect[0];
 }
 
+/*Time complexity = O(nlog(n))*/
+/*Space complexity = O(log(n))*/
 void char_to_binary(Node* root, vector<pair<char, string>>& codes, string s)
 {
 	if (!root) return;
@@ -138,6 +148,8 @@ void char_to_binary(Node* root, vector<pair<char, string>>& codes, string s)
 	char_to_binary(root->right, codes, s + "1");
 }
 
+/*Time complexity = O(nlog(n))*/
+/*Space complexity = O(n)*/
 string encode_str(string s, vector<pair<char, string>>& codes)
 {
 	string encodedStr = "";
@@ -159,14 +171,17 @@ string encode_str(string s, vector<pair<char, string>>& codes)
 	/*Make the first line for the data needed for decompression*/
 	/*Replace the characters by codes*/
 	encodedStr += '\n';
+	//O(nlog(n))
 	for (size_t i = 0; i < s.size(); i++)
 	{
-		int index = get_vector_index<char, string>(codes, s[i]);
+		int index = get_vector_index<char, string>(codes, s[i]);	//O(log(n))
 		encodedStr += codes[index].second;
 	}
 	return encodedStr;
 }
 
+/*Time complexity = O(n), n -> size of encoded file*/
+/*Space complexity = O(n), no. of symbols*/
 string encoded_to_symbol(string encodedStr)
 {
 	string strBuffer = "";
@@ -188,7 +203,7 @@ string encoded_to_symbol(string encodedStr)
 		if (strBuffer.size() == 8 || (strBuffer.size() < 8 && i == encodedStr.size() - 1))
 		{
 			// char 26 which is SUB that makes a problem when the file is read in decompression
-			if (strBuffer == "00011010")
+			if (strBuffer == ASCII_26)
 			{
 				charSUBIndeces.push(countSymbols);
 			}
@@ -223,27 +238,30 @@ string encoded_to_symbol(string encodedStr)
 	return symboledStr;
 }
 
-void print_codes(vector<pair<char, string>>& codes)
-{
-	for (auto i : codes)
-		cout << i.first << " -> " << i.second << endl;
-}
+/*this function for testing*/
+// void print_codes(vector<pair<char, string>>& codes)
+// {
+// 	for (auto i : codes)
+// 		cout << i.first << " -> " << i.second << endl;
+// }
 
+/*Time complexity = O(nlog(n))*/
+/*Space complexity = O(n)*/
 string compress(string text)
 {
-	priority_queue<pair<int, char>>pq = get_chars_frq(text);
-	Node* root = make_huffman_tree(pq);
+	priority_queue<pair<int, char>>pq = get_chars_frq(text);	//O(1)
+	Node* root = make_huffman_tree(pq);		//O(n)
 	vector<pair<char, string>>codes;
-	char_to_binary(root, codes, "");
-	string encodedStr = encode_str(text, codes);
-	//writeFile(encodedStr);
-	string symboledStr = encoded_to_symbol(encodedStr);
+	char_to_binary(root, codes, "");	//O(nlog(n))
+	string encodedStr = encode_str(text, codes);	//O(nlog(n))
+	string symboledStr = encoded_to_symbol(encodedStr);	//O(n)
 	return symboledStr;
 }
 
-int main()
-{
-	string text = readFile();
-	string symbols = compress(text);
-	writeFile(symbols);
-}
+
+// int main()
+// {
+// 	string text = readFile();
+// 	string symbols = compress(text);
+// 	writeFile(symbols);
+// }
