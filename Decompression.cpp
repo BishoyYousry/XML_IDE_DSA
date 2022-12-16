@@ -2,6 +2,8 @@
 #include"Decompression.h"
 using namespace std;
 
+/*Time complexity = O(log(n))*/
+/*Space complexity = O(1)*/
 template<typename T1, typename T2>
 int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
 {
@@ -12,24 +14,8 @@ int get_vector_index(vector<pair<T1, T2>>& codes, T1 t)
 	return -1;
 }
 
-string readFile(string path = "Sample.hm")
-{
-	string line;
-	string wholeFile = "";
-	ifstream inputFile(path);
-	while (getline(inputFile, line))
-		wholeFile += line + "\n";
-	//wholeFile = wholeFile.erase(wholeFile.size() - 1, 2);
-	return wholeFile;
-}
-
-void writeFile(string s)
-{
-	fstream outputFile;
-	outputFile.open("XMLFile(1).xml", ios::out);
-	outputFile << s;
-}
-
+/*Time complexity = O(log(n)) , n -> no. of different chars*/
+/*Space complexity = O(n)*/
 vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& charSUBIndeces, int& lastSymbolBytes)
 {
 	int i = 0;
@@ -61,7 +47,7 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& 
 		currentChar = symboledStr[++i];
 	}
 
-	/*Get characters codes*/
+	/*Extract characters codes*/
 	vector<pair<string, char>>codes;
 	int startIndex = symboledStr.find('\n');
 	while (i != startIndex)
@@ -87,6 +73,8 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& 
 	return codes;
 }
 
+/*Time complexity = O(n), n -> no. of symbols after converting to symbols*/
+/*Space complexity = O(n)*/
 string symbols_to_binary_str(string symboledStr, vector<int>charSUBIndeces, int lastSymbolBytes)
 {
 	string binaryText = "";
@@ -98,7 +86,7 @@ string symbols_to_binary_str(string symboledStr, vector<int>charSUBIndeces, int 
 		/*If the current index is found in the vector charSUBIndeces then insert "00011010" -> SUB char*/
 		if (SUBIndex < charSUBIndeces.size() && charSUBIndeces[SUBIndex] == countSymbols)
 		{
-			binaryText += "00011010";
+			binaryText += ASCII_26;
 			SUBIndex++;
 			i--;
 		}
@@ -153,19 +141,21 @@ string symbols_to_binary_str(string symboledStr, vector<int>charSUBIndeces, int 
 			binaryText += x.to_string();
 			countSymbols++;
 		}
-		//writeFile(binaryText);
 	}
 	return binaryText;
 }
 
+/*Time complexity = O(nlog(n))*/
+/*Space complexity = O(n)*/
 string binary_to_text(vector<pair<string, char>>codes, string binaryText)
 {
 	/*Convert binary ASCII to the original chars*/
 	string text = "", buffer = "";
+	//O(n)
 	for (size_t i = 0; i < binaryText.size(); i++)
 	{
 		buffer += binaryText[i];
-		int index = get_vector_index<string, char>(codes, buffer);
+		int index = get_vector_index<string, char>(codes, buffer);	//O(nlog(n))
 		if (index != -1)
 		{
 			text += codes[index].second;
@@ -175,23 +165,38 @@ string binary_to_text(vector<pair<string, char>>codes, string binaryText)
 	return text;
 }
 
-
+/*Time complexity = O(nlog(n))*/
+/*Space complexity = O(log(n))*/
 string decompress(string& symboledStr)
 {
 	vector<int>charSUBIndeces;
 	int lastSymbolBytes = 8;	//Default value
 	vector<pair<string, char>>codes = extract_char_codes(symboledStr, charSUBIndeces, lastSymbolBytes);
 	string binaryText = symbols_to_binary_str(symboledStr, charSUBIndeces, lastSymbolBytes);
-	//writeFile(binaryText);
 	string text = binary_to_text(codes, binaryText);
 	return text;
 }
 
+// string readFile(string path = "Sample.hm")
+// {
+// 	string line;
+// 	string wholeFile = "";
+// 	ifstream inputFile(path);
+// 	while (getline(inputFile, line))
+// 		wholeFile += line + "\n";
+// 	return wholeFile;
+// }
 
+// void writeFile(string s)
+// {
+// 	fstream outputFile;
+// 	outputFile.open("XMLFile(1).xml", ios::out);
+// 	outputFile << s;
+// }
 
-int main()
-{
-	string symbols = readFile();
-	string text = decompress(symbols);
-	writeFile(text);
-}
+// int main()
+// {
+// 	string symbols = readFile();
+// 	string text = decompress(symbols);
+// 	writeFile(text);
+// }
