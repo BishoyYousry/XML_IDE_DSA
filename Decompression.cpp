@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#include"Decompress.h"
+#include"Decompression.h"
 using namespace std;
 
 template<typename T1, typename T2>
@@ -45,7 +45,7 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& 
 		lastSymbolBytes = stoi(buffer);
 		i++;
 	}
-		
+
 	buffer = "";
 	char currentChar = symboledStr[i], previous = currentChar;
 	/*Extract the indeces of SUB char in the vector -> charSUBIndeces*/
@@ -87,7 +87,7 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& 
 	return codes;
 }
 
-string symbols_to_binary_str(string& symboledStr, vector<int>charSUBIndeces, int lastSymbolBytes)
+string symbols_to_binary_str(string symboledStr, vector<int>charSUBIndeces, int lastSymbolBytes)
 {
 	string binaryText = "";
 	int startIndex = symboledStr.find('\n');
@@ -98,9 +98,9 @@ string symbols_to_binary_str(string& symboledStr, vector<int>charSUBIndeces, int
 		/*If the current index is found in the vector charSUBIndeces then insert "00011010" -> SUB char*/
 		if (SUBIndex < charSUBIndeces.size() && charSUBIndeces[SUBIndex] == countSymbols)
 		{
-			binaryText.insert(i, "00011010");
-			i += 8;
+			binaryText += "00011010";
 			SUBIndex++;
+			i--;
 		}
 		else if (i == symboledStr.size() - 2)	/*The last symbol*/
 		{
@@ -147,12 +147,13 @@ string symbols_to_binary_str(string& symboledStr, vector<int>charSUBIndeces, int
 			countSymbols++;
 			i++;
 		}
-		else if (i != symboledStr.size() - 2)
+		else /*if (i != symboledStr.size() - 2)*/
 		{
 			bitset<8>x((int)symboledStr[i]);
 			binaryText += x.to_string();
 			countSymbols++;
 		}
+		//writeFile(binaryText);
 	}
 	return binaryText;
 }
@@ -181,6 +182,7 @@ string decompress(string& symboledStr)
 	int lastSymbolBytes = 8;	//Default value
 	vector<pair<string, char>>codes = extract_char_codes(symboledStr, charSUBIndeces, lastSymbolBytes);
 	string binaryText = symbols_to_binary_str(symboledStr, charSUBIndeces, lastSymbolBytes);
+	//writeFile(binaryText);
 	string text = binary_to_text(codes, binaryText);
 	return text;
 }
