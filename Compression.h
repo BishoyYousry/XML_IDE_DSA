@@ -1,5 +1,5 @@
-#ifndef COMPRESS_H
-#define COMPRESS_H
+#ifndef COMPRESSION_H
+#define COMPRESSION_H
 
 #include<bits/stdc++.h>
 using namespace std;

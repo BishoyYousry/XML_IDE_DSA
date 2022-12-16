@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
-#include"Compress.h"
+#include"Compression.h"
 using namespace std;
-
 
 string readFile(string path = "XMLFile.xml")
 {
@@ -200,14 +199,15 @@ string encoded_to_symbol(string encodedStr)
 				so we will store the no. of bytes of this symbol in the 1st line*/
 				noOfBytesLastSymbol = to_string(strBuffer.size()) + " ";
 				symboledStr += (char)stoi(strBuffer, 0, 2);	// Store the symbol
+				countSymbols++;
 			}
 
 			else
 			{
 				symboledStr += (char)stoi(strBuffer, 0, 2);
+				countSymbols++;
 			}
 			strBuffer = "";
-			countSymbols++;
 		}
 	}
 
@@ -236,6 +236,7 @@ string compress(string text)
 	vector<pair<char, string>>codes;
 	char_to_binary(root, codes, "");
 	string encodedStr = encode_str(text, codes);
+	//writeFile(encodedStr);
 	string symboledStr = encoded_to_symbol(encodedStr);
 	return symboledStr;
 }
