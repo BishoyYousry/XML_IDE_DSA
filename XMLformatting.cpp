@@ -8,7 +8,7 @@ string remove_spaces(string input) {
 	string noSpaces;
 	while (getline(in, x)) {
 		//if the line start with spaces delete them until finding the first character then leave the loop
-		while (x[0] == ' ') {
+		while (x[0] == ' ' || x[0] == '\t') {
 			x.erase(0, 1);
 		}
 		//saving lines to the output string (noSpaces)
@@ -29,8 +29,10 @@ string one_line_file_handling(string input) {
 	while (getline(in, y)) {
 		//handle multiple data lines
 		if (y[0] != '<')
+		{
 			y.insert(0, "\n");
-		for (int i = 0; i <= y.length(); i++) {
+		}
+		for (int i = 0; i < y.length(); i++) {
 			//at the end of each tag add add newline
 			if (y[i] == '>') 
 			{
@@ -73,23 +75,19 @@ string formatting(string input) {
 		if (z[0] == '<' && z[1] != '/')
 		{
 			z.insert(0, space);
-			space.push_back(' ');
-			space.push_back(' ');
-			space.push_back(' ');
-			space.push_back(' ');
-		}
-		//if the line is close tag
-		else if (z[0] == '<' && z[1] == '/')
-		{
-			space.pop_back();
-			space.pop_back();
-			space.pop_back();
-			space.pop_back();
-			z.insert(0, space);
+			for(int i=0 ; i<4; i++)
+				space.push_back(' ');
 		}
 		//if the line is data
 		else if (z[0] != '<')
 		{
+			z.insert(0, space);
+		}
+		//if the line is close tag
+		else if (z[0] == '<' && z[1] == '/')
+		{
+			for (int i = 0; i < 4; i++)
+				space.pop_back();
 			z.insert(0, space);
 		}
 		//saving lines to the output string (formattedOutput)
@@ -99,4 +97,5 @@ string formatting(string input) {
 		formattedOutput.push_back('\n');
 	}
 	return formattedOutput;
+	
 }
