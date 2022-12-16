@@ -1,11 +1,11 @@
-void xml_minifying()
+#include"xml_minifying.h"
+string xml_minifying(string fileStr)
 {
-	ifstream inputFile("C:/Users/future/Desktop/main/main/XMLFile.xml");
-	fstream outputFile;
-    outputFile.open("XMLFile.txt", ios::out);
+	istringstream stream(fileStr);
 	string line;
-	
-	while (getline(inputFile, line))
+	string result = "";
+
+	while (getline(stream, line))
 	{
 		for (size_t i = 0; i < line.size(); i++)
 		{
@@ -24,7 +24,7 @@ void xml_minifying()
 				i--;
 			}
 		}
-		outputFile << line;
+		result = result + line;
 	}
-	outputFile.close();
+	return result;
 }
