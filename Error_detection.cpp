@@ -92,6 +92,85 @@ string angular_brackets_error_list(string input)
     return angularBracketsErrorList;
 }
 
+//correct angular brackets errors
+string angular_brackets_error_correction(string input)
+{
+    istringstream in(input);
+    string y;
+    string angularBracketsErrorsCorrected;
+    int flag = 0;// handle when a tag contain a missing '>' so it Don't go through the last elseif statement 
+
+    while (getline(in, y))
+    {
+        for (int i = 0; i < y.length(); i++)
+        {
+            //correct missing '>' errors in  closeTag
+            if (y[i] == '<' && y[i+1] == '/')
+            {
+                i+=2; //start iterating over the line after "</" characters
+                while (y[i] != '>')
+                {
+                    if (y[i] == '<' || i == y.length() || y[i] == '\n' || y[i] == ' ')
+                    {
+                        //insert the missing '>' and set the flag 
+                        y.insert(i, ">");
+                        flag = 1;
+                        i--;
+                        break;
+                    }
+                    i++;
+                }
+            }
+
+            //correct missing '>' errors in  openTag
+            else if (y[i] == '<' && y[i + 1] != '/')
+            {
+                i++; //start iterating over the line after '<' character
+                while (y[i] != '>')
+                {
+                    if (y[i] == '<' || i == y.length() || y[i] == '\n' || y[i] == ' ')
+                    {
+                        // insert the missing '>' and set the flag
+                        y.insert(i, ">");
+                        flag = 1;
+                        i--;
+                        break;
+                    }
+                    i++;
+                }
+            }
+
+            //correct missing '<' errors in any tag
+            else if (y[i] == '>' && flag == 0)
+            {
+                for (int j=i; j >= 0; j--)
+                {
+                    //the missing '<' in a closeTag
+                    if (y[j] == '/')
+                    {
+                        y.insert(j, "<");
+                        break;
+                    }
+                    //the missing '<' in a openTag
+                    else if (j == 0)
+                    {
+                        y.insert(j, "<");   
+                        break;
+                    }
+                }
+                break;
+            } 
+        }
+
+        //saving lines to the output string (angularBracketsErrorsCorrected)
+        for (int i = 0; i < y.length(); i++) 
+        {
+            angularBracketsErrorsCorrected.push_back(y[i]);
+        }
+    }
+    return angularBracketsErrorsCorrected;
+}
+
 string  tags_error_list(string input)
 {
     istringstream in(input);
