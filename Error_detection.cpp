@@ -1,4 +1,4 @@
-#include"error_validation.h"
+#include"Error_detection.h"
 #include "XMLformatting.h"
 #include <bits/stdc++.h>
 
