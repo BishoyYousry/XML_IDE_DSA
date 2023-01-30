@@ -1,24 +1,27 @@
-#include<bits/stdc++.h>
-#include"Compression.h"
+#include "Compression.h"
+#include <stack>
+#include <fstream>
+
 using namespace std;
 
-// string readFile(string path = "XMLFile.xml")
-// {
-// 	string line;
-// 	string wholeFile = "";
-// 	ifstream inputFile(path);
-// 	while (getline(inputFile, line))
-// 		wholeFile += line + "\n";
-// 	wholeFile = wholeFile.erase(wholeFile.size() - 1, 1);
-// 	return wholeFile;
-// }
+ string readFile(string path = "XMLFile.xml")
+ {
+ 	string line;
+ 	string wholeFile = "";
+ 	ifstream inputFile(path);
+ 	while (getline(inputFile, line))
+ 		wholeFile += line + "\n";
+ 	wholeFile = wholeFile.erase(wholeFile.size() - 1, 1);
+ 	return wholeFile;
+ }
 
-// void writeFile(string s)
-// {
-// 	fstream outputFile;
-// 	outputFile.open("Sample.hm", ios::out);
-// 	outputFile << s;
-// }
+ void writeFile(string s)
+ {
+ 	fstream outputFile;
+ 	outputFile.open("Sample.hm", ios::out);
+ 	outputFile << s;
+ }
+
 
 /*Time complexity = O(log(n))*/
 /*Space complexity = O(1)*/
