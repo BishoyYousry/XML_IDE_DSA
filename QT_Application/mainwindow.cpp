@@ -1,5 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "./XMLformatting.h"
+#include "./xml_minifying.h"
+#include "./Error_detection.h"
+#include "./compression.h"
+#include "./decompression.h"
+
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -202,7 +208,7 @@ void MainWindow::write_codeeditor(CodeEditor* editor, QString& text)
     editor->setPlainText(text);
 }
 
-void MainWindow::saveFile(QString& data)
+void MainWindow::saveFile(QString& data,QString extension)
 {
     QString dir = QFileDialog::getExistingDirectory(this, "Save Compressed File",fileName,QFileDialog::ShowDirsOnly| QFileDialog::DontResolveSymlinks);
     if (dir.isEmpty())
@@ -211,7 +217,7 @@ void MainWindow::saveFile(QString& data)
     }
     else
     {
-        QString filePath = dir + "/Compressed.txt";
+        QString filePath = dir + "/Compressed" + extension;
         write_file(filePath,data);
         QMessageBox::information(this,"Result","The new file is downloaded in " + filePath);
     }
@@ -219,7 +225,7 @@ void MainWindow::saveFile(QString& data)
 
 QString MainWindow::getFile()
 {
-    QString filter = "Text File(*.txt)";
+    QString filter = "Text File(*.txt) Hm File(*.hm)";
     QString filename = QFileDialog::getOpenFileName(this,"Decompress File",fileName,filter);
     QString text = read_file(filename);
     return text;
@@ -280,26 +286,25 @@ void MainWindow::on_pushButton_Validate_clicked()
     {
         QMessageBox::critical(this,"Result","No Input is found");
     }
-    /*else
+    else
     {
-       bool result = check(text);
+       bool result =  error_detection(text.toStdString());
        if(result == true)
        {
            QMessageBox::information(this,"Result","Valid");
        }
        else
        {
-           QString errorList = validate(text);
+           QString errorList = QString::fromStdString(error_list(text.toStdString()));
            QMessageBox::critical(this,"Result",errorList);
            QMessageBox::StandardButton answer = QMessageBox::question(this,"Result","Do you want to solve the error?",QMessageBox::Yes | QMessageBox::No);
            if(answer == QMessageBox::Yes)
            {
-               QString solve = solve_error();
+               QString solve = QString::fromStdString(error_correction(text.toStdString()));
                write_codeeditor(XMLOutput,solve);
            }
        }
     }
-    */
 }
 
 
@@ -310,11 +315,11 @@ void MainWindow::on_pushButton_Format_clicked()
     {
         QMessageBox::critical(this,"Result","No Input is found");
     }
-    /*else
+    else
     {
          QString output = QString::fromStdString(formatting(text.toStdString()));
          write_codeeditor(XMLOutput,output);
-    }*/
+    }
 }
 
 
@@ -325,13 +330,13 @@ void MainWindow::on_pushButton_Minify_clicked()
     {
         QMessageBox::critical(this,"Result","No Input is found");
     }
-    /*else
+    else
     {
         //To convert from String to QString, use fromStdString
         //To convert from QString to String use toStdString()
         QString output = QString::fromStdString(xml_minifying(text.toStdString()));
         write_codeeditor(XMLOutput,output);
-    }*/
+    }
 }
 
 
@@ -347,6 +352,30 @@ void MainWindow::on_pushButton_JSON_clicked()
         QString output = QString::fromStdString(xmlToJson(text.toStdString()));
         write_codeeditor(XMLOutput,output);
     }*/
+}
+
+void MainWindow::on_pushButton_Compress_clicked()
+{
+    QString text = read_codeeditor(XMLInput);
+    if(text.isEmpty())
+    {
+        QMessageBox::critical(this,"Result","No Input is found");
+    }
+    else
+    {
+        QString compressedData = QString::fromStdString(compress(text.toStdString()));
+        show_progress("Compressing:");
+        saveFile(compressedData,"hm");
+    }
+}
+
+
+void MainWindow::on_pushButton_Decompress_clicked()
+{
+    /*QString compressedData = getFile();
+    QString decompressedData = decompress(compressedData);
+    show_progress("Decompressing:");
+    saveFile(decompressedData,"xml");*/
 }
 
 
@@ -393,32 +422,6 @@ void MainWindow::on_pushButton_SaveAs_clicked()
         QString text = read_codeeditor(XMLOutput);
         write_file(filePath,text);
     }
-}
-
-
-void MainWindow::on_pushButton_Compress_clicked()
-{
-    QString text = read_codeeditor(XMLInput);
-    if(text.isEmpty())
-    {
-        QMessageBox::critical(this,"Result","No Input is found");
-    }
-    else
-    {
-        //QString compressedData = compress(text);
-        //show_progress("Compressing:");
-        //saveFile(compressedData);
-
-    }
-}
-
-
-void MainWindow::on_pushButton_Decompress_clicked()
-{
-    QString compressedData = getFile();
-    /*QString decompressedData = Decompress(compressedData);
-    show_progress("Decompressing:");
-    saveFile(decompressedData);*/
 }
 
 void MainWindow::LeftCopy_clicked()

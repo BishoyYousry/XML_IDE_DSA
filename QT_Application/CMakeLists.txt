@@ -18,10 +18,23 @@ set(PROJECT_SOURCES
         linenumberarea.cpp
         codeeditor.cpp
         clickablelabel.cpp
+        XMLformatting.cpp
+        xml_minifying.cpp
+        Error_detection.cpp
+        compression.cpp
+        decompression.cpp
+        XMLConversion.cpp
+        Tree_Node.cpp
         mainwindow.h
         CodeEditor.h
         linenumberarea.h
         clickablelabel.h
+        XMLformatting.h
+        xml_minifying.h
+        Error_detection.h
+        compression.h
+        decompression.h
+        Tree_Node.h
         mainwindow.ui
         resource.qrc
 )

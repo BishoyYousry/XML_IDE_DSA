@@ -31,7 +31,7 @@ public:
     void write_file(QString&,QString&);
     QString read_codeeditor(CodeEditor*);
     void write_codeeditor(CodeEditor*,QString&);
-    void saveFile(QString&);
+    void saveFile(QString&,QString);
     QString getFile();
     void show_progress(QString);
     ~MainWindow();

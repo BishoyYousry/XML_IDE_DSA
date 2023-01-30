@@ -1,6 +1,0 @@
-﻿  XMLConversion.cpp
-C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(42,2): warning C4091: 'static ': ignored on left of 'Node' when no variable is declared
-C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(83,24): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(87,16): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Hassan Khaled\source\repos\XMLConversion\XMLConversion\XMLConversion.cpp(169,27): warning C4018: '<': signed/unsigned mismatch
-  XMLConversion.vcxproj -> C:\Users\Hassan Khaled\source\repos\XMLConversion\Debug\XMLConversion.exe
