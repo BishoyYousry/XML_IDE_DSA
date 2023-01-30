@@ -75,7 +75,7 @@ string angular_brackets_error_list(string input)
                     //the missing '<' in a closeTag
                     if (x[j] == '/')
                     {      
-                        while (j != '>')
+                        while (x[j+1]!= '>')
                         {
                             j++;
                             tag.push_back(x[j]);
