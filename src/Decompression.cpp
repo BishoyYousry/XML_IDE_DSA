@@ -1,5 +1,5 @@
-#include<bits/stdc++.h>
 #include"Decompression.h"
+
 using namespace std;
 
 /*Time complexity = O(log(n))*/
@@ -177,22 +177,22 @@ string decompress(string& symboledStr)
 	return text;
 }
 
-// string readFile(string path = "Sample.hm")
-// {
-// 	string line;
-// 	string wholeFile = "";
-// 	ifstream inputFile(path);
-// 	while (getline(inputFile, line))
-// 		wholeFile += line + "\n";
-// 	return wholeFile;
-// }
+string readFile(string path = "Sample.hm")
+{
+	string line;
+	string wholeFile = "";
+	ifstream inputFile(path);
+	while (getline(inputFile, line))
+		wholeFile += line + "\n";
+	return wholeFile;
+}
 
-// void writeFile(string s)
-// {
-// 	fstream outputFile;
-// 	outputFile.open("XMLFile(1).xml", ios::out);
-// 	outputFile << s;
-// }
+void writeFile(string s)
+{
+	fstream outputFile;
+	outputFile.open("XMLFile(1).xml", ios::out);
+	outputFile << s;
+}
 
 // int main()
 // {

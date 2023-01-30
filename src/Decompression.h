@@ -1,4 +1,8 @@
-#include<bits/stdc++.h>
+#ifndef DECOMPRESSION_H
+#define DECOMPRESSION_H
+
+#include <vector>
+#include <string>
 using namespace std;
 
 template<typename T1, typename T2>
@@ -15,3 +19,5 @@ string symbols_to_binary_str(string& symboledStr, vector<int>charSUBIndeces);
 string binary_to_text(vector<pair<string, char>>codes, string binaryText);
 
 string decompress(string&symboledStr);
+
+#endif
