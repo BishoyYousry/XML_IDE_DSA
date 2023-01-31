@@ -193,13 +193,13 @@ string encoded_to_symbol(string encodedStr)
 				/*Last symbol must not be writen in 8 bits
 				so we will store the no. of bytes of this symbol in the 1st line*/
 				noOfBytesLastSymbol = to_string(strBuffer.size()) + " ";
-				symboledStr += (char)stoi(strBuffer, 0, 2);	// Store the symbol
+                symboledStr += (unsigned char)stoi(strBuffer, 0, 2);	// Store the symbol
 				countSymbols++;
 			}
 
 			else
 			{
-				symboledStr += (char)stoi(strBuffer, 0, 2);
+                symboledStr += (unsigned char)stoi(strBuffer, 0, 2);
 				countSymbols++;
 			}
 			strBuffer = "";
@@ -228,5 +228,5 @@ string compress(string text)
 	char_to_binary(root, codes, "");	//O(nlog(n))
 	string encodedStr = encode_str(text, codes);	//O(nlog(n))
 	string symboledStr = encoded_to_symbol(encodedStr);	//O(n)
-	return symboledStr;
+    return symboledStr;
 }

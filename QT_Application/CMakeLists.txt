@@ -23,7 +23,7 @@ set(PROJECT_SOURCES
         Error_detection.cpp
         compression.cpp
         decompression.cpp
-        XMLConversion.cpp
+        json_Conversion.cpp
         Tree_Node.cpp
         mainwindow.h
         CodeEditor.h
@@ -35,6 +35,7 @@ set(PROJECT_SOURCES
         compression.h
         decompression.h
         Tree_Node.h
+        json_Conversion.h
         mainwindow.ui
         resource.qrc
 )

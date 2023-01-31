@@ -5,7 +5,7 @@
 #include "./Error_detection.h"
 #include "./compression.h"
 #include "./decompression.h"
-
+#include "./json_Conversion.h"
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -347,16 +347,17 @@ void MainWindow::on_pushButton_JSON_clicked()
     {
         QMessageBox::critical(this,"Result","No Input is found");
     }
-    /*else
+    else
     {
         QString output = QString::fromStdString(xmlToJson(text.toStdString()));
         write_codeeditor(XMLOutput,output);
-    }*/
+    }
 }
 
 void MainWindow::on_pushButton_Compress_clicked()
 {
     QString text = read_codeeditor(XMLInput);
+    qDebug() << text;
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"Result","No Input is found");
@@ -364,18 +365,31 @@ void MainWindow::on_pushButton_Compress_clicked()
     else
     {
         QString compressedData = QString::fromStdString(compress(text.toStdString()));
+        //write_codeeditor(XMLOutput,compressedData);
         show_progress("Compressing:");
-        saveFile(compressedData,"hm");
+        saveFile(compressedData,".hm");
     }
 }
 
 
 void MainWindow::on_pushButton_Decompress_clicked()
 {
-    /*QString compressedData = getFile();
-    QString decompressedData = decompress(compressedData);
+    QString compressedData = getFile();
+    QString decompressedData = QString::fromStdString(decompress(compressedData.toStdString()));;
     show_progress("Decompressing:");
-    saveFile(decompressedData,"xml");*/
+    int type = detect_type(compressedData.toStdString());
+    switch(type)
+    {
+    case 0:
+        saveFile(decompressedData,".xml");
+        break;
+    case 1:
+        saveFile(decompressedData,".json");
+        break;
+    case 2:
+        saveFile(decompressedData,".txt");
+        break;
+    }
 }
 
 

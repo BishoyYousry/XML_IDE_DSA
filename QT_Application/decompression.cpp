@@ -1,5 +1,10 @@
-#include "decompression.h"
+#include"decompression.h"
+
+
 using namespace std;
+
+//Static global variable, it will be used in readFile function
+static vector<pair<string, char>> codes;
 
 /*Time complexity = O(log(n))*/
 /*Space complexity = O(1)*/
@@ -48,7 +53,7 @@ vector<pair<string, char>> extract_char_codes(string& symboledStr, vector<int>& 
 
 	/*Extract characters codes*/
 	vector<pair<string, char>>codes;
-	size_t startIndex = symboledStr.find('\n');
+	int startIndex = symboledStr.find('\n');
 	while (i != startIndex)
 	{
 		currentChar = symboledStr[i];
@@ -93,42 +98,42 @@ string symbols_to_binary_str(string symboledStr, vector<int>charSUBIndeces, int 
 		{
 			if (lastSymbolBytes == 1)
 			{
-				bitset<1>x((int)symboledStr[i]);
+                bitset<1>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else if (lastSymbolBytes == 2)
 			{
-				bitset<2>x((int)symboledStr[i]);
+                bitset<2>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else if (lastSymbolBytes == 3)
 			{
-				bitset<3>x((int)symboledStr[i]);
+                bitset<3>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else if (lastSymbolBytes == 4)
 			{
-				bitset<4>x((int)symboledStr[i]);
+                bitset<4>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else if (lastSymbolBytes == 5)
 			{
-				bitset<5>x((int)symboledStr[i]);
+                bitset<5>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else if (lastSymbolBytes == 6)
 			{
-				bitset<6>x((int)symboledStr[i]);
+                bitset<6>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else if (lastSymbolBytes == 7)
 			{
-				bitset<7>x((int)symboledStr[i]);
+                bitset<7>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			else
 			{
-				bitset<8>x((int)symboledStr[i]);
+                bitset<8>x((unsigned int)symboledStr[i]);
 				binaryText += x.to_string();
 			}
 			countSymbols++;
@@ -136,7 +141,7 @@ string symbols_to_binary_str(string symboledStr, vector<int>charSUBIndeces, int 
 		}
 		else /*if (i != symboledStr.size() - 2)*/
 		{
-			bitset<8>x((int)symboledStr[i]);
+            bitset<8>x((unsigned int)symboledStr[i]);
 			binaryText += x.to_string();
 			countSymbols++;
 		}
@@ -170,8 +175,31 @@ string decompress(string symboledStr)
 {
 	vector<int>charSUBIndeces;
 	int lastSymbolBytes = 8;	//Default value
-	vector<pair<string, char>>codes = extract_char_codes(symboledStr, charSUBIndeces, lastSymbolBytes);
+	codes = extract_char_codes(symboledStr, charSUBIndeces, lastSymbolBytes);
 	string binaryText = symbols_to_binary_str(symboledStr, charSUBIndeces, lastSymbolBytes);
 	string text = binary_to_text(codes, binaryText);
-	return text;
+    return binaryText;
+}
+
+int detect_type(string s)
+{
+    for (size_t i = 0; i < codes.size(); i++)
+    {
+        // If we find '{' or '[' or '\\' or ':', this file was JSON
+        switch (codes[i].second)
+        {
+        case '{':
+        case '[':
+        case '\\':
+        case ':':
+            return 1;
+            break;
+
+            // If we find '<', this file was XML
+        case '<':
+            return 0;
+            break;
+        }
+    }
+    return 2;
 }

@@ -26,6 +26,7 @@ bool error_detection(string x)
                 return false;
             }
         }
+
         else if (x[i] == '<' && x[i + 1] != '/')
         {
             string pushed_str;
@@ -57,7 +58,7 @@ string angular_brackets_error_list(string input)
     istringstream in(input);
     string x;
     string angularBracketsErrorList;
-    int counter = 0; 
+    int counter = 0;
     while (getline(in, x))
     {
         counter++;
@@ -102,27 +103,36 @@ string angular_brackets_error_list(string input)
             }
 
             //missing '<' in any tag
-            else if (x[i] == '>') 
+            else if (x[i] == '>')
             {
                 string tag;
                 //go back in the line to get the tag name 
-                for (int i = 0; i >= 0; i--)
+                for (int j = i - 1; j >= 0; j--)
                 {
                     //the missing '<' in a closeTag
-                    if (x[i] == '/')
+                    if (x[j] == '/')
                     {
-                        for (int j = i; x[j] != '>'; j++)
+                        while (x[j+1] != '>')
+                        {
+                            j++;
                             tag.push_back(x[j]);
-                        angularBracketsErrorList += "there is a missing < in the closeTag <" + tag + "> in the line " + to_string(counter) + "\n";
-
+                        }
+                        angularBracketsErrorList += "there is a missing < in the closeTag </" + tag + "> in the line " + to_string(counter) + "\n";
+                        break;
                     }
                     //the missing '<' in a openTag
-                    else if ( i == 0)
+                    else if (x[j] == '>' || x[j] == '\n' || x[j] == ' ' || j == 0)
                     {
-                        for (int j = i; x[j] != '>'; j++)
+                        while (x[j + 1] != '>')
+                        {
+                            j++;
                             tag.push_back(x[j]);
+                        }
+
                         angularBracketsErrorList += "there is a missing < in the openTag <" + tag + "> in the line " + to_string(counter) + "\n";
+                        break;
                     }
+
                 }
             }
         }
@@ -130,81 +140,55 @@ string angular_brackets_error_list(string input)
     return angularBracketsErrorList;
 }
 
+
+
 //correct angular brackets errors
 string angular_brackets_error_correction(string input)
 {
     istringstream in(input);
     string y;
     string angularBracketsErrorsCorrected;
-    int flag = 0;// handle when a tag contain a missing '>' so it Don't go through the last elseif statement 
 
     while (getline(in, y))
     {
         for (int i = 0; i < y.length(); i++)
         {
-            //correct missing '>' errors in  closeTag
-            if (y[i] == '<' && y[i+1] == '/')
+            //correct missing '>' errors in any tag
+            if (y[i] == '<')
             {
-                i+=2; //start iterating over the line after "</" characters
-                while (y[i] != '>')
+                while (y[++i] != '>')
                 {
                     if (y[i] == '<' || i == y.length() || y[i] == '\n' || y[i] == ' ')
                     {
-                        //insert the missing '>' and set the flag 
                         y.insert(i, ">");
-                        flag = 1;
-                        i--;
                         break;
                     }
-                    i++;
-                }
-            }
-
-            //correct missing '>' errors in  openTag
-            else if (y[i] == '<' && y[i + 1] != '/')
-            {
-                i++; //start iterating over the line after '<' character
-                while (y[i] != '>')
-                {
-                    if (y[i] == '<' || i == y.length() || y[i] == '\n' || y[i] == ' ')
-                    {
-                        // insert the missing '>' and set the flag
-                        y.insert(i, ">");
-                        flag = 1;
-                        i--;
-                        break;
-                    }
-                    i++;
                 }
             }
 
             //correct missing '<' errors in any tag
-            else if (y[i] == '>' && flag == 0)
+            else if (y[i] == '>')
             {
-                for (int j=i; j >= 0; j--)
+
+                for (int j = i - 1; j >= 0; j--)
                 {
-                    //the missing '<' in a closeTag
-                    if (y[j] == '/')
+                    if (y[j] == '>' || y[j] == '\n' || y[j] == ' ')
                     {
-                        y.insert(j, "<");
+                        y.insert(j + 1, "<");
+                        i++;
                         break;
                     }
-                    //the missing '<' in a openTag
-                    else if (j == 0)
+                    else if (j == 0 || y[j] == '/')
                     {
-                        y.insert(j, "<");   
+                        y.insert(j, "<");
+                        i++;
                         break;
                     }
                 }
-                break;
-            } 
+            }
         }
+        angularBracketsErrorsCorrected = angularBracketsErrorsCorrected + y + "\n";
 
-        //saving lines to the output string (angularBracketsErrorsCorrected)
-        for (int i = 0; i < y.length(); i++) 
-        {
-            angularBracketsErrorsCorrected.push_back(y[i]);
-        }
     }
     return angularBracketsErrorsCorrected;
 }
@@ -227,13 +211,13 @@ string  tags_error_list(string input)
     {
         lineNum++;
         for (int i = 0; i < x.length(); i++)
-        {            
+        {
             //missing openTag
-            if (x[i] == '<' && x[i+1] != '/')
+            if (x[i] == '<' && x[i + 1] != '/')
             {
                 i++;
-                do 
-                {                    
+                do
+                {
                     y.push_back(x[i++]);
                 } while (x[i] != '>');
                 tag temp = tag(lineNum, y, 0);
@@ -242,14 +226,14 @@ string  tags_error_list(string input)
                 //cout << temp.data;
             }
             //missing closeTag
-            else if (x[i] == '<' && x[i+1] == '/')
+            else if (x[i] == '<' && x[i + 1] == '/')
             {
                 i += 2;
-                do 
+                do
                 {
                     y.push_back(x[i++]);
                 } while (x[i] != '>');
-                x.erase(i+1, 1);
+                x.erase(i + 1, 1);
                 for (int j = 0; j < (list.size()); j++)
                 {
                     if (j > comparasonLength)
@@ -262,35 +246,17 @@ string  tags_error_list(string input)
                         break;
                     }
                 }
-                x.insert(i+1, "/");
+                x.insert(i + 1, "/");
                 if (!flag)
-                {                    
+                {
                     tag temp = tag(lineNum, y, 1);
                     list.push_back(temp);
-                    comparasonLength += 2;                    
+                    comparasonLength += 2;
                 }
             }
             flag = 0;
             y = "";
-            //dealing with data lines 
-           /* if (x[i] != '<')
-            {
-                DataLines.push_back(lineNum);
-                cout << lineNum;
-            }*/
         }
-
-
-        for (int j = 0; j < list.size(); j++)
-        {
-            //cout << list[j].data << '\n';
-        }
-        //cout << to_string(lineNum) << "\n*****************************" << "\n";
-        //cout << x;
-        //tt = find(DataLines.begin(), DataLines.end(), (53));    //ASCII 5 -> 53
-        //if (tt != DataLines.end())
-        //    return "";
-
     }
 
     //DataLines.push_back(0);
@@ -402,7 +368,7 @@ string tags_error_correction(string input)
             //cout << list[j].data << '\n';
         }
     }
-    //***********VALIDATTTTTTTTTTTTTTTTTT******************
+    //***********VALIDATE******************
     int j = 0;
     lineNum = 0;
     int case1_flag = 0;
@@ -418,7 +384,6 @@ string tags_error_correction(string input)
             output += x + "\n";
             case2_flag = 0;
             output += y + "\n";
-            //cout << output << "\n 1 \n";
             continue;
         }
 
@@ -426,7 +391,6 @@ string tags_error_correction(string input)
         if (Rubishit == RybishLines.end())
         {
             output += x + "\n";
-            //cout << output << "\n 2 \n";
             continue;
         }
 
@@ -434,7 +398,6 @@ string tags_error_correction(string input)
         {
             case1_flag = 0;
             output += y + "\n";
-            //cout << output << "\n 3 \n";
             continue;
         }
 
@@ -446,7 +409,6 @@ string tags_error_correction(string input)
             output += x + "\n";
             y = x;
             y.insert(1, "/");
-            //cout << output << "\n 4 \n";
             j++;
             continue;
         }
@@ -467,7 +429,6 @@ string tags_error_correction(string input)
                 x.insert(1, "/");
                 output += x + "\n";
             }
-            //cout << output << "\n 5 \n";
             j++;
             continue;
         }
@@ -495,7 +456,6 @@ string tags_error_correction(string input)
                 x.insert(1, "/");
                 output += x + "\n";
             }
-            //cout << output << "\n 6 \n";
             j++;
             continue;
         }
@@ -505,18 +465,18 @@ string tags_error_correction(string input)
 
 string error_list(string input) {
 
-string str1 = angular_brackets_error_list(input);
-string str2 = angular_brackets_error_correction(input);
-string str4 = tags_error_list(str2);
-string errorList = str1 + str4;
-//cout << "\n\n\n" << input;
-return errorList;
+    string str1 = angular_brackets_error_list(input);
+    string str2 = angular_brackets_error_correction(input);
+    string str4 = tags_error_list(str2);
+    string errorList = str1 + str4;
+    //cout << "\n\n\n" << input;
+    return errorList;
 }
 
 
 string error_correction(string input) {
     string str1 = angular_brackets_error_correction(input);
-    string str2 = remove_spaces(str1);    
+    string str2 = remove_spaces(str1);
     string str3 = one_line_file_handling(str2);
     string str4 = tags_error_correction(str3);
     string str5 = formatting(str4);
