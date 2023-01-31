@@ -88,6 +88,7 @@ void treeToJson(Node* n, int TapCount, ostringstream& s) {
 //---------------------------------------- ARRAY TO TREE ----------------------------------------------------------
 
 
+
 Node* arrToTree(vector<Node*> arr) {
 
     stack<Node*> stack;
@@ -101,7 +102,7 @@ Node* arrToTree(vector<Node*> arr) {
             stack.pop();
 
             while (top->type != NodeType::OPENINGTAG) {
-                temp->children.push_back(top);
+                temp->children.insert(temp->children.begin(), top);
                 top = stack.top();
                 stack.pop();
             }
