@@ -364,7 +364,6 @@ QString fromVector(const QVector<uchar> vector)
 void MainWindow::on_pushButton_Compress_clicked()
 {
     QString text = read_codeeditor(XMLInput);
-    qDebug() << text;
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"Result","No Input is found");
