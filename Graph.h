@@ -20,8 +20,8 @@ class Graph
 {
 private:
 	unordered_map<int, User*>graph;
-	unordered_map<string,Set>postByWord;
-	unordered_map<int, pair<int,Post>>postById;
+	unordered_map<string,Set>postByWord;//Key is the word you search, value is set of post Id that have this word
+	unordered_map<int, pair<string,Post>>postById;//key is the postId, vaue is pair[user Name + Post[body + vector of topics]]
 	pair<string, int>mostInfluncer; //name of most influncer user + number of its followers
 	pair<string, int>mostActive;   //name of most active user + number of its followee
 public:
@@ -34,4 +34,5 @@ public:
 	vector<string> get_most_active();
 	vector<string> get_mutual_followers(int firstId, int secondId);
 	vector<string>get_followers_suggestions(int id);
+	vector<pair<string, Post>>post_search(string word);
 };

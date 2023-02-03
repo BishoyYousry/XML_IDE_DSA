@@ -28,7 +28,7 @@ void Graph::add_post(int userId, int postId, Post post)
 	  a) there is a space before any word
 	  b) Each topic is single word (has no space)
 	*/
-	postById[postId] = {userId,post};
+	postById[postId] = {graph[userId]->name,post};
 	string word;
 	stringstream iss(post.body);
 	while (iss >> word)
@@ -137,4 +137,14 @@ vector<string> Graph::get_followers_suggestions(int userId)
 	for (auto id: id_suggestion)
 		suggestions.push_back(graph[id]->name);
 	return suggestions;
+}
+
+vector<pair<string,Post>> Graph::post_search(string word)
+{
+	vector<pair<string, Post>>result;
+	Set postIdSet = postByWord[word]; //Get set of post Id that have this word
+	vector<int>postIdVec = postIdSet.getElements(); //get elements from set into vector to access them
+	for (auto id : postIdVec)
+		result.push_back(postById[id]); //Get pair consists of userName + Post
+	return result;
 }
