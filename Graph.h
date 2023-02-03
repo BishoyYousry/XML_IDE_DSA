@@ -3,8 +3,10 @@
 #include <string>
 #include <sstream>
 #include <unordered_map>
-#include "User.h"
 #include <utility>
+#include <algorithm>
+#include "Utility.h"
+#include "User.h"
 #include "set.h"
 using namespace std;
 
@@ -30,4 +32,6 @@ public:
 	void add_followers(int srcId, int dstId);
 	vector<string> get_most_influncer();
 	vector<string> get_most_active();
+	vector<string> get_mutual_followers(int firstId, int secondId);
+	vector<string>get_followers_suggestions(int id);
 };

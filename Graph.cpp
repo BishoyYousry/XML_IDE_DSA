@@ -87,3 +87,54 @@ vector<string> Graph::get_most_active()
 	}
 	return mostActiveUsers;
 }
+
+vector<string> Graph::get_mutual_followers(int firstId, int secondId)
+{
+	//sorting the vectors
+	Utility::quick_sort(graph[firstId]->followers);
+	Utility::quick_sort(graph[secondId]->followers);
+	vector<int>commonId(graph[firstId]->followers.size() + graph[secondId]->followers.size());
+	//declaring result vector to store the common elements
+	vector<string>mutualFollowers;
+	//iterator to store return type
+	vector<int>::iterator it, end;
+	end = set_intersection(
+		             graph[firstId]->followers.begin(), graph[firstId]->followers.end(),
+	               	 graph[secondId]->followers.begin(), graph[secondId]->followers.end(),
+		             commonId.begin()
+	                 );
+
+	for (it = commonId.begin(); it != end; it++)
+		mutualFollowers.push_back(graph[*it]->name);
+
+	return mutualFollowers;
+}
+
+vector<string> Graph::get_followers_suggestions(int userId)
+{
+	vector<int>id_suggestion;
+	Set s;
+	vector<string>suggestions;
+	//This loop get the id of followers of followers
+	for (auto follower : graph[userId]->followers)
+		id_suggestion.insert(id_suggestion.end(), graph[follower]->followers.begin(), graph[follower]->followers.end());
+	//This loop inserts Id in set to be sorted ,remove repeated elements
+	//and remove the id of src if found 
+	for (auto id : id_suggestion)
+	{
+		if(id!=userId)
+			s.insert(id);
+	}
+	//This loop check if any id in set is found in src, if so it will remove it
+	for (auto id : graph[userId]->followers)
+	{
+		if (s.exists(id))
+			s.remove(id);
+	}
+	//get items of set in vector so we can access them one by one 
+	id_suggestion = s.getElements();
+	//Get the name of user eqiovalent to its id
+	for (auto id: id_suggestion)
+		suggestions.push_back(graph[id]->name);
+	return suggestions;
+}
