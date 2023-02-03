@@ -5,9 +5,11 @@
 #include <unordered_map>
 #include <utility>
 #include <algorithm>
+#include <stack>
 #include "Utility.h"
 #include "User.h"
 #include "set.h"
+#include "XMLformatting.h"
 using namespace std;
 
 struct Post
@@ -35,4 +37,5 @@ public:
 	vector<string> get_mutual_followers(int firstId, int secondId);
 	vector<string>get_followers_suggestions(int id);
 	vector<pair<string, Post>>post_search(string word);
+	void extract_data(string fileStr);
 };

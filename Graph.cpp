@@ -91,6 +91,7 @@ vector<string> Graph::get_most_active()
 vector<string> Graph::get_mutual_followers(int firstId, int secondId)
 {
 	//sorting the vectors
+	//if()
 	Utility::quick_sort(graph[firstId]->followers);
 	Utility::quick_sort(graph[secondId]->followers);
 	vector<int>commonId(graph[firstId]->followers.size() + graph[secondId]->followers.size());
@@ -147,4 +148,83 @@ vector<pair<string,Post>> Graph::post_search(string word)
 	for (auto id : postIdVec)
 		result.push_back(postById[id]); //Get pair consists of userName + Post
 	return result;
+}
+
+//collect the data from XML file 
+void Graph::extract_data(string fileStr)
+{
+	string tempStr = remove_spaces(fileStr);
+	istringstream str(one_line_file_handling(tempStr));
+	string line, userName;
+	stack<string>tags;
+	vector<pair<int, int>>followers;		//followers.push_back({srcId, dstId})
+	Post post;
+	int userId = -1;		//Default value
+	int postId = 0;			//Default value
+	//To separate user id from followers ids (the default is *user*)
+	//switch to follower if we find <follower>
+	string userOrFollower = "user";
+	while (getline(str, line))
+	{
+		//Closing tag
+		if (line[0] == '<' && line[1] == '/')
+		{
+			if (line == "</post>")
+			{
+				//reset post struct to store another one 
+				post.body.clear();
+				post.topics.clear();
+			}
+			else if (line == "</user>")
+			{
+				//Reset userName and userId
+				userId = -1;
+				userName.clear();
+				userOrFollower = "user";
+			}
+			tags.pop();
+		}
+		//Opening tag
+		else if (line[0] == '<' && line[1] != '/')
+		{
+			tags.push(line);
+			if (tags.top() == "<post>")	postId++;
+			else if (tags.top() == "<followers>") userOrFollower = "follower";
+		}
+		//Data
+		else
+		{
+			if (tags.top() == "<id>")
+			{
+				if (userOrFollower == "user")
+				{
+					userId = stoi(line);
+					if (!userName.empty())
+						add_user(userId, userName);
+				}
+
+				else if (userOrFollower == "follower")
+					followers.push_back({ userId, stoi(line) });
+
+			}
+			else if (tags.top() == "<name>")
+			{
+				userName = line;
+				if (userId >= 0) add_user(userId, userName);
+			}
+			else if (tags.top() == "<body>")
+			{
+				post.body = line;
+				if (!post.topics.empty()) add_post(userId, postId, post);
+			}
+			else if (tags.top() == "<topic>")
+			{
+				post.topics.push_back(line);
+				if (!post.body.empty()) add_post(userId, postId, post);
+			}
+		}
+	}
+	//Add followers
+	for (size_t i = 0; i < followers.size(); i++)
+		add_followers(followers[i].first, followers[i].second);
 }
