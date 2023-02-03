@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include <QGraphicsDropShadowEffect>
 #include <QScrollArea>
-#include "CodeEditor.h"
-#include "clickablelabel.h"
 #include <QDebug>
 #include <QPixmap>
 #include<QMessageBox>
@@ -16,6 +14,19 @@
 #include <QIcon>
 #include <QLabel>
 #include <QClipboard>
+#include <vector>
+#include <QVector>
+#include "CodeEditor.h"
+#include "clickablelabel.h"
+#include "inputdialog.h"
+#include "./ui_mainwindow.h"
+#include "./XMLformatting.h"
+#include "./xml_minifying.h"
+#include "./Error_detection.h"
+#include "./compression.h"
+#include "./decompression.h"
+#include "./json_Conversion.h"
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -65,6 +76,12 @@ private slots:
 
     void Delete_clicked();
 
+    void on_pushButton_MutualFollowers_clicked();
+
+    void on_pushButton_2ndDegreeFollowers_clicked();
+
+    void on_pushButton_PostSearch_clicked();
+
 private:
     Ui::MainWindow *ui;
     ClickableLabel* Copy[2];
@@ -79,5 +96,6 @@ private:
     QGraphicsDropShadowEffect* XMLOutputEffect;
     QString fileName;
     QClipboard *clip;
+    //Graph* graph;
 };
 #endif // MAINWINDOW_H

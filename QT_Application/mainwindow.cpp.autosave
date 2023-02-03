@@ -1,13 +1,4 @@
 #include "mainwindow.h"
-#include <vector>
-#include <QVector>
-#include "./ui_mainwindow.h"
-#include "./XMLformatting.h"
-#include "./xml_minifying.h"
-#include "./Error_detection.h"
-#include "./compression.h"
-#include "./decompression.h"
-#include "./json_Conversion.h"
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -166,6 +157,8 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     fileName = QDir::homePath();
 
     clip = QApplication::clipboard();
+
+    //graph = new Graph();
 
     connect(Copy[0],SIGNAL(clicked()),this,SLOT(LeftCopy_clicked()));
     connect(sample,SIGNAL(clicked()),this,SLOT(Sample_clicked()));
@@ -386,7 +379,7 @@ void MainWindow::on_pushButton_Compress_clicked()
 void MainWindow::on_pushButton_Decompress_clicked()
 {
     QString compressedData = getFile();
-    QString decompressedData = QString::fromStdString(decompress(compressedData.toStdString()));;
+    QString decompressedData = QString::fromStdString(decompress(compressedData.toStdString()));
     show_progress("Decompressing:");
     int type = detect_type(compressedData.toStdString());
     switch(type)
@@ -413,8 +406,13 @@ void MainWindow::on_pushButton_MostActive_clicked()
     }
     /*else
     {
-        QString output = most_active(text);
-        QMessageBox::information(this,"Result",output);
+        graph.read_file(text.toStdString());
+        vector<string> outputVector = get_most_active();
+        for(auto element:outputVector)
+        {
+            QString output = output + QString::fromStdString(element) + "";
+        }
+         QMessageBox::information(this,"Most Active",output);
     }*/
 }
 
@@ -428,11 +426,46 @@ void MainWindow::on_pushButton_MostInfluncer_clicked()
     }
     /*else
     {
-        QString output = most_influncer(text);
-        write_codeeditor(XMLOutput,output);
+        graph.read_file(text.toStdString());
+        vector<string> outputVector = get_most_influncer();
+        for(auto element:outputVector)
+        {
+            QString output = output + QString::fromStdString(element) + "\n";
+        }
+         QMessageBox::information(this,"Most Influncer",output);
     }*/
 }
 
+void MainWindow::on_pushButton_MutualFollowers_clicked()
+{
+    InputDialog dialog(this);
+        if (dialog.exec() == QDialog::Accepted) 
+        {
+            QString user1Id = dialog.getUser1Id();
+            QString user2Id = dialog.getUser2Id();
+            
+               vector<string> outputVector = get_mutual_followers(stringValue.toInt(&user1Id),stringValue.toInt(&user2Id));
+               if(outputVector.empty())
+                   QMessageBox::information(this,"Result","No Mutual Followers");
+               else
+               {
+                   
+               }
+            
+        }
+}
+
+
+void MainWindow::on_pushButton_2ndDegreeFollowers_clicked()
+{
+
+}
+
+
+void MainWindow::on_pushButton_PostSearch_clicked()
+{
+
+}
 
 void MainWindow::on_pushButton_SaveAs_clicked()
 {
@@ -474,3 +507,4 @@ void MainWindow::Delete_clicked()
 {
  XMLInput->setPlainText("");
 }
+
