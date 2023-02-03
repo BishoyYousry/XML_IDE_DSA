@@ -12,4 +12,5 @@ public:
 	bool exists(int element);
 	int size();
 	void print();
+	std::vector<int>getElements();
 };

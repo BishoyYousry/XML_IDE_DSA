@@ -30,3 +30,11 @@ void Set::print() {
     }
     std::cout << " }" << std::endl;
 }
+
+std::vector<int> Set::getElements() {
+    std::vector<int> keys;
+    for (std::map<int, bool>::const_iterator it = elements.begin(); it != elements.end(); ++it) {
+        keys.push_back(it->first);
+    }
+    return keys;
+}
