@@ -399,7 +399,7 @@ void MainWindow::on_pushButton_Decompress_clicked()
 
 void MainWindow::on_pushButton_MostActive_clicked()
 {
-    QString text = read_codeeditor(XMLInput);
+    /*QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"Most Active","No Input is found");
@@ -414,13 +414,13 @@ void MainWindow::on_pushButton_MostActive_clicked()
             text = text + QString::fromStdString(element) + "";
         }
          QMessageBox::information(this,"Most Active",text);
-    }
+    }*/
 }
 
 
 void MainWindow::on_pushButton_MostInfluncer_clicked()
 {
-    QString text = read_codeeditor(XMLInput);
+    /*QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"Most Influncer","No Input is found");
@@ -435,12 +435,12 @@ void MainWindow::on_pushButton_MostInfluncer_clicked()
             text = text + QString::fromStdString(element) + "\n";
         }
          QMessageBox::information(this,"Most Influncer",text);
-    }
+    }*/
 }
 
 void MainWindow::on_pushButton_MutualFollowers_clicked()
 {
-    QString text = read_codeeditor(XMLInput);
+    /*QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"Mutual Followers","No Input is found");
@@ -473,13 +473,13 @@ void MainWindow::on_pushButton_MutualFollowers_clicked()
                    }
 
             }
-    }
+    }*/
 }
 
 
 void MainWindow::on_pushButton_2ndDegreeFollowers_clicked()
 {
-    QString text = read_codeeditor(XMLInput);
+    /*QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"2nd Degree Folowers","No Input is found");
@@ -493,7 +493,7 @@ void MainWindow::on_pushButton_2ndDegreeFollowers_clicked()
             {
                 QString userId = dialog.getUser1Id();
 
-                   /*vector<string> outputVector = graph->get_followers_suggestions(userId.toInt());
+                   vector<string> outputVector = graph->get_followers_suggestions(userId.toInt());
                    text = "";
                    if(outputVector.empty())
                        QMessageBox::information(this,"2nd Degree Folowers","No Suggestions");
@@ -509,16 +509,15 @@ void MainWindow::on_pushButton_2ndDegreeFollowers_clicked()
                        }
                         QMessageBox::information(this,"2nd Degree Folowers",text);
                    }
-                   */
 
             }
-    }
+    }*/
 }
 
 
 void MainWindow::on_pushButton_PostSearch_clicked()
 {
-    QString text = read_codeeditor(XMLInput);
+    /*QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
         QMessageBox::critical(this,"Post Search","No Input is found");
@@ -527,8 +526,7 @@ void MainWindow::on_pushButton_PostSearch_clicked()
     {
         graph->extract_data(text.toStdString());
         text = "";
-
-    }
+    }*/
 }
 
 void MainWindow::on_pushButton_SaveAs_clicked()
