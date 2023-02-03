@@ -26,7 +26,7 @@
 #include "./compression.h"
 #include "./decompression.h"
 #include "./json_Conversion.h"
-#include <QDebug>
+#include "Graph.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -96,6 +96,6 @@ private:
     QGraphicsDropShadowEffect* XMLOutputEffect;
     QString fileName;
     QClipboard *clip;
-    //Graph* graph;
+    Graph* graph;
 };
 #endif // MAINWINDOW_H

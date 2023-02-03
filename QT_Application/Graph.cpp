@@ -7,18 +7,20 @@ Graph::Graph()
 
 	mostActive.first = "";
 	mostActive.second = 0;
+
+
 }
 
 Graph::~Graph()
 {
 	for (auto element : graph)
-		delete element.second;
+        delete element.second;
 }
 
-void Graph::add_user(int id,string& name)
+void Graph::add_user(int id,string name)
 {
 	User* vertix = new User(name);
-	graph[id] = vertix;
+    this->graph[id] = vertix;
 }
 
 void Graph::add_post(int userId, int postId, Post post)
@@ -90,8 +92,9 @@ vector<string> Graph::get_most_active()
 
 vector<string> Graph::get_mutual_followers(int firstId, int secondId)
 {
+	if (graph.find(firstId) == graph.end() || graph.find(firstId) == graph.end())
+		return { " " };
 	//sorting the vectors
-	//if()
 	Utility::quick_sort(graph[firstId]->followers);
 	Utility::quick_sort(graph[secondId]->followers);
 	vector<int>commonId(graph[firstId]->followers.size() + graph[secondId]->followers.size());
@@ -113,6 +116,8 @@ vector<string> Graph::get_mutual_followers(int firstId, int secondId)
 
 vector<string> Graph::get_followers_suggestions(int userId)
 {
+    if (graph.find(userId) == graph.end())
+        return { " " };
 	vector<int>id_suggestion;
 	Set s;
 	vector<string>suggestions;
@@ -194,7 +199,7 @@ void Graph::extract_data(string fileStr)
 		//Data
 		else
 		{
-			if (tags.top() == "<id>")
+            if (!tags.empty() && tags.top() == "<id>")
 			{
 				if (userOrFollower == "user")
 				{
@@ -207,17 +212,17 @@ void Graph::extract_data(string fileStr)
 					followers.push_back({ userId, stoi(line) });
 
 			}
-			else if (tags.top() == "<name>")
+            else if (!tags.empty() && tags.top() == "<name>")
 			{
 				userName = line;
 				if (userId >= 0) add_user(userId, userName);
 			}
-			else if (tags.top() == "<body>")
+            else if (!tags.empty() && tags.top() == "<body>")
 			{
 				post.body = line;
 				if (!post.topics.empty()) add_post(userId, postId, post);
 			}
-			else if (tags.top() == "<topic>")
+            else if (!tags.empty() && tags.top() == "<topic>")
 			{
 				post.topics.push_back(line);
 				if (!post.body.empty()) add_post(userId, postId, post);

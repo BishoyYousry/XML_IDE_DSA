@@ -10,7 +10,7 @@ private:
 	vector<int>followers;
 	int followeeNumber;
 public:
-	User(string& name);
+    User(string name);
 	friend class Graph;
 };
 

@@ -21,15 +21,15 @@ struct Post
 class Graph
 {
 private:
-	unordered_map<int, User*>graph;
+    unordered_map<int, User*>graph;
 	unordered_map<string,Set>postByWord;//Key is the word you search, value is set of post Id that have this word
 	unordered_map<int, pair<string,Post>>postById;//key is the postId, vaue is pair[user Name + Post[body + vector of topics]]
-	pair<string, int>mostInfluncer; //name of most influncer user + number of its followers
+    pair<string, int>mostInfluncer; //name of most influncer user + number of its followers
 	pair<string, int>mostActive;   //name of most active user + number of its followee
 public:
 	Graph();
 	~Graph();
-	void add_user(int id,string& name);
+    void add_user(int id,string name);
 	void add_post(int userId, int postId, Post post);
 	void add_followers(int srcId, int dstId);
 	vector<string> get_most_influncer();

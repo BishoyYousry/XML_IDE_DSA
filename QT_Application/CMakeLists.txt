@@ -27,6 +27,10 @@ set(PROJECT_SOURCES
         decompression.cpp
         json_Conversion.cpp
         Tree_Node.cpp
+        Graph.cpp
+        set.cpp
+        User.cpp
+        Utility.cpp
         mainwindow.ui
         resource.qrc
 )
@@ -43,6 +47,10 @@ set(PROJECT_HEADERS
     decompression.h
     Tree_Node.h
     json_Conversion.h
+    Graph.h
+    set.h
+    User.h
+    Utility.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

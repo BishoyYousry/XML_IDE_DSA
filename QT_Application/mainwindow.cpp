@@ -402,18 +402,19 @@ void MainWindow::on_pushButton_MostActive_clicked()
     QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
-        QMessageBox::critical(this,"Result","No Input is found");
+        QMessageBox::critical(this,"Most Active","No Input is found");
     }
-    /*else
+    else
     {
-        graph.read_file(text.toStdString());
-        vector<string> outputVector = get_most_active();
-        for(auto element:outputVector)
+        graph->extract_data(text.toStdString());
+        text = "";
+        vector<string> outputVector = graph->get_most_active();
+        for(string element:outputVector)
         {
-            QString output = QString::fromStdString(element);
-            QMessageBox::information(this,"Result",output);
+            text = text + QString::fromStdString(element) + "";
         }
-    }*/
+         QMessageBox::information(this,"Most Active",text);
+    }
 }
 
 
@@ -422,40 +423,112 @@ void MainWindow::on_pushButton_MostInfluncer_clicked()
     QString text = read_codeeditor(XMLInput);
     if(text.isEmpty())
     {
-        QMessageBox::critical(this,"Result","No Input is found");
+        QMessageBox::critical(this,"Most Influncer","No Input is found");
     }
-    /*else
+    else
     {
-        graph.read_file(text.toStdString());
-        vector<string> outputVector = get_most_influncer();
+        graph->extract_data(text.toStdString());
+        text = "";
+        vector<string> outputVector = graph->get_most_influncer();
         for(auto element:outputVector)
         {
-            QString output = QString::fromStdString(element);
-            QMessageBox::information(this,"Result",output);
+            text = text + QString::fromStdString(element) + "\n";
         }
-    }*/
+         QMessageBox::information(this,"Most Influncer",text);
+    }
 }
 
 void MainWindow::on_pushButton_MutualFollowers_clicked()
 {
-    InputDialog dialog(this);
-        if (dialog.exec() == QDialog::Accepted) {
-            QString user1Id = dialog.getUser1Id();
-            QString user2Id = dialog.getUser2Id();
-            qDebug() << user1Id << " " << user2Id;
-        }
+    QString text = read_codeeditor(XMLInput);
+    if(text.isEmpty())
+    {
+        QMessageBox::critical(this,"Mutual Followers","No Input is found");
+    }
+    else
+    {
+        graph->extract_data(text.toStdString());
+        text = "";
+        InputDialog dialog(this);
+            if (dialog.exec() == QDialog::Accepted)
+            {
+                QString user1Id = dialog.getUser1Id();
+                QString user2Id = dialog.getUser2Id();
+
+                   vector<string> outputVector = graph->get_mutual_followers(user1Id.toInt(),user2Id.toInt());
+                   text = "";
+                   if(outputVector.empty())
+                       QMessageBox::information(this,"Mutual Followers","No Mutual Followers");
+                   else if(outputVector.size() == 1 && outputVector[0] == " ")
+                   {
+                       QMessageBox::critical(this,"Mutual Followers","ID is not found");
+                   }
+                   else
+                   {
+                       for(auto element:outputVector)
+                       {
+                           text = text + QString::fromStdString(element) + "\n";
+                       }
+                        QMessageBox::information(this,"Mutual Followers",text);
+                   }
+
+            }
+    }
 }
 
 
 void MainWindow::on_pushButton_2ndDegreeFollowers_clicked()
 {
+    QString text = read_codeeditor(XMLInput);
+    if(text.isEmpty())
+    {
+        QMessageBox::critical(this,"2nd Degree Folowers","No Input is found");
+    }
+    else
+    {
+        //graph->extract_data(text.toStdString());
+        text = "";
+        InputDialog dialog(this);
+            if (dialog.exec() == QDialog::Accepted)
+            {
+                QString userId = dialog.getUser1Id();
 
+                   /*vector<string> outputVector = graph->get_followers_suggestions(userId.toInt());
+                   text = "";
+                   if(outputVector.empty())
+                       QMessageBox::information(this,"2nd Degree Folowers","No Suggestions");
+                   else if(outputVector.size() == 1 && outputVector[0] == " ")
+                   {
+                       QMessageBox::critical(this,"2nd Degree Folowers","ID is not found");
+                   }
+                   else
+                   {
+                       for(auto element:outputVector)
+                       {
+                           text = text + QString::fromStdString(element) + "\n";
+                       }
+                        QMessageBox::information(this,"2nd Degree Folowers",text);
+                   }
+                   */
+
+            }
+    }
 }
 
 
 void MainWindow::on_pushButton_PostSearch_clicked()
 {
+    QString text = read_codeeditor(XMLInput);
+    if(text.isEmpty())
+    {
+        QMessageBox::critical(this,"Post Search","No Input is found");
+    }
+    else
+    {
+        graph->extract_data(text.toStdString());
+        text = "";
 
+    }
 }
 
 void MainWindow::on_pushButton_SaveAs_clicked()
