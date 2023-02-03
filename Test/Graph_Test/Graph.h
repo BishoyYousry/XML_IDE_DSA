@@ -32,6 +32,7 @@ public:
 	void add_user(int id,string& name);
 	void add_post(int userId, int postId, Post post);
 	void add_followers(int srcId, int dstId);
+	void extract_data(string str);
 	vector<string> get_most_influncer();
 	vector<string> get_most_active();
 	vector<string> get_mutual_followers(int firstId, int secondId);
