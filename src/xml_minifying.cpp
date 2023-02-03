@@ -1,4 +1,8 @@
-#include"xml_minifying.h"
+#include "xml_minifying.h"
+#include <sstream>
+
+using namespace std;
+
 string xml_minifying(string fileStr)
 {
 	istringstream stream(fileStr);

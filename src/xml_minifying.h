@@ -1,6 +1,2 @@
-#ifndef XML_MINIFYING_H
-#define XML_MINIFYING_H
-
+#pragma once
 string xml_minifying(string fileStr);
-
-#endif
